@@ -1,0 +1,59 @@
+<properties>
+	<main.wom>
+		<anim>
+			<idle>
+				<file>anim/ht_idle.wom</file>
+				<addToPeriodic/>				
+			</idle>
+			
+				<walk>
+					<file>anim/ht_walk.wom</file>
+					<addToPeriodic/>
+				</walk>	
+		
+				<ready>
+					<file>anim/ht_ready.wom</file>
+					<addToPeriodic/>
+				</ready>
+				
+				<fight_strike>
+					<file>anim/ht_attack.wom</file>
+				</fight_strike>
+				<fight_bite>
+					<file>anim/ht_attack.wom</file>
+				</fight_bite>
+				<fight_claw>
+					<file>anim/ht_attack.wom</file>
+				</fight_claw>
+				<fight_kick>
+					<file>anim/ht_attack.wom</file>
+				</fight_kick>
+				
+				<wounded>
+					<file>anim/ht_wounded.wom</file>
+					<effect>
+						<wraithEffect01>
+							<nullName>head</nullName>
+							<time>0.01</time>
+						</wraithEffect01>
+					</effect>
+				</wounded>
+				<die>
+					<file>anim/ht_die.wom</file>	
+						<effect>
+							<insectHitBlood>
+								<nullName>head</nullName>
+								<time>0.3</time>
+							</insectHitBlood>
+					  	</effect>	
+
+						<effect>
+							<insectHitBlood>
+								<nullName>root</nullName>
+								<time>0.1</time>
+							</insectHitBlood>
+					  	</effect>			
+				</die>		
+		</anim>
+	</main.wom>
+</properties>

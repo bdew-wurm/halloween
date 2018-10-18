@@ -1,0 +1,2 @@
+model.creature.eviltree         = ominoustree/main.wom
+model.creature.pumpkinmonster   = scarypumpkin/main.wom
