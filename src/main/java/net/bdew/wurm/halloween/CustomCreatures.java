@@ -24,6 +24,7 @@ public class CustomCreatures {
                         CreatureTypes.C_TYPE_HUNTING,
                         CreatureTypes.C_TYPE_CARNIVORE,
                         CreatureTypes.C_TYPE_NON_NEWBIE,
+                        CreatureTypes.C_TYPE_NO_REBIRTH
                 })
                 .bodyType(BodyTemplate.TYPE_HUMAN)
                 .defaultSkills()
@@ -75,6 +76,7 @@ public class CustomCreatures {
                         CreatureTypes.C_TYPE_HUNTING,
                         CreatureTypes.C_TYPE_CARNIVORE,
                         CreatureTypes.C_TYPE_NON_NEWBIE,
+                        CreatureTypes.C_TYPE_NO_REBIRTH
                 })
                 .bodyType(BodyTemplate.TYPE_HUMAN)
                 .defaultSkills()
