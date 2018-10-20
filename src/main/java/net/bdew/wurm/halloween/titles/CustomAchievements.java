@@ -16,7 +16,7 @@ public class CustomAchievements {
 
     public static void register() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         pumpkinKiller = addTemplate(ModConfig.pumpkinKillerAchId, "Smashing pumpkins", "You smashed a monstrous pumpkin", false, 1, MiscConstants.A_TYPE_SILVER, false, false);
-        treeKiller = addTemplate(ModConfig.treeKillerAchId, "What a releaf", "You chopped down and evil tree", false, 1, MiscConstants.A_TYPE_SILVER, false, false);
+        treeKiller = addTemplate(ModConfig.treeKillerAchId, "What a releaf", "You chopped down an evil tree", false, 1, MiscConstants.A_TYPE_SILVER, false, false);
         gravestoneLooter = addTemplate(ModConfig.gravestoneLooterAchId, "Trick or treat", "You investigated an ominous gravestone", false, 1, MiscConstants.A_TYPE_SILVER, false, false);
     }
 
