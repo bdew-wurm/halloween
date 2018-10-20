@@ -1,5 +1,7 @@
 package net.bdew.wurm.halloween;
 
+import com.wurmonline.mesh.GrassData;
+import com.wurmonline.mesh.Tiles;
 import com.wurmonline.server.*;
 import com.wurmonline.server.behaviours.Action;
 import com.wurmonline.server.behaviours.ActionEntry;
@@ -115,6 +117,8 @@ public class InvestigateGravestoneAction implements ModAction, ActionPerformer, 
                     comm.sendNormalServerMessage("The ominous gravestone evaporates into a cloud of black smoke!");
 
                     CustomAchievements.triggerAchievement(performer, CustomAchievements.gravestoneLooter);
+
+                    fixTerrain(target.getTileX(), target.getTileY());
 
                     return propagate(action, ActionPropagation.FINISH_ACTION, ActionPropagation.NO_ACTION_PERFORMER_PROPAGATION, ActionPropagation.NO_SERVER_PROPAGATION);
                 }
@@ -361,5 +365,23 @@ public class InvestigateGravestoneAction implements ModAction, ActionPerformer, 
             default:
                 return ItemList.coinSilverFive;
         }
+    }
+
+    private void fixTerrain(int tileX, int tileY) {
+        for (int x = tileX - 3; x <= tileX + 3; x++) {
+            for (int y = tileY - 3; y <= tileY + 3; y++) {
+                if (x < 0 || y < 0 || x >= Zones.worldTileSizeX || y >= Zones.worldTileSizeY || Zones.isTileProtected(x, y))
+                    continue;
+                int tile = Server.surfaceMesh.getTile(x, y);
+                if (Tiles.decodeType(tile) == Tiles.TILE_TYPE_DIRT_PACKED) {
+                    if (Zones.getKingdom(x, y) == 3)
+                        Server.surfaceMesh.setTile(x, y, Tiles.encode(Tiles.decodeHeight(tile), (byte) Tiles.TILE_TYPE_MYCELIUM, GrassData.encodeGrassTileData(GrassData.GrowthStage.SHORT, GrassData.GrassType.GRASS, GrassData.FlowerType.NONE)));
+                    else
+                        Server.surfaceMesh.setTile(x, y, Tiles.encode(Tiles.decodeHeight(tile), (byte) Tiles.TILE_TYPE_GRASS, GrassData.encodeGrassTileData(GrassData.GrowthStage.SHORT, GrassData.GrassType.GRASS, GrassData.FlowerType.NONE)));
+                    Players.getInstance().sendChangedTile(x, y, true, false);
+                }
+            }
+        }
+
     }
 }

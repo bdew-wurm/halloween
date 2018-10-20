@@ -19,12 +19,7 @@ public class GravestoneTracker {
 
     private static long lastCheck = System.currentTimeMillis();
 
-    public static void gravestoneLoaded(Item gravestone) {
-        gravestones.add(gravestone);
-        guards.put(gravestone.getWurmId(), new HashSet<>());
-    }
-
-    public static void gravestoneSpawned(Item gravestone) {
+    public static void addGravestone(Item gravestone) {
         gravestones.add(gravestone);
         guards.put(gravestone.getWurmId(), new HashSet<>());
     }
@@ -81,8 +76,8 @@ public class GravestoneTracker {
 
         int woodTiles = 0;
 
-        for (int x = tileX - 2; x < tileX + 2; x++) {
-            for (int y = tileY - 2; y < tileY + 2; y++) {
+        for (int x = tileX - 2; x <= tileX + 2; x++) {
+            for (int y = tileY - 2; y <= tileY + 2; y++) {
                 if (x < 0 || y < 0 || x >= Zones.worldTileSizeX || y >= Zones.worldTileSizeY) return;
                 Tiles.Tile check = Tiles.getTile(Tiles.decodeType(Server.surfaceMesh.getTile(x, y)));
                 if (check.isTree() || check.isBush()) woodTiles++;
@@ -95,7 +90,7 @@ public class GravestoneTracker {
             Item gravestone = ItemFactory.createItem(CustomItems.gravestoneId, 99f, (byte) 0, null);
             vt.addItem(gravestone, false, false);
             Halloween.logInfo(String.format("Spawned gravestone at %d,%d", tileX, tileY));
-            gravestoneSpawned(gravestone);
+            addGravestone(gravestone);
 
             for (int i = 0; i < ModConfig.guardianCount; i++) {
                 try {

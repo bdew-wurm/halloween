@@ -6,7 +6,7 @@ import com.wurmonline.server.items.Item;
 public class Hooks {
     public static void addItemLoading(Item item) {
         if (item.getTemplateId() == CustomItems.gravestoneId) {
-            GravestoneTracker.gravestoneLoaded(item);
+            GravestoneTracker.addGravestone(item);
         }
     }
 
