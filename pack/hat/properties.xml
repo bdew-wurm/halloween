@@ -1,0 +1,14 @@
+<properties>
+    <witchHat.wom>
+        <offsetToNull>
+            <NullHelmet>
+                <xPos>0</xPos>
+                <yPos>-0.066</yPos>
+                <zPos>0.005</zPos>
+                <xRot>-14.215</xRot>
+                <yRot>0</yRot>
+                <zRot>0</zRot>
+            </NullHelmet>
+        </offsetToNull>
+    </witchHat.wom>
+</properties>

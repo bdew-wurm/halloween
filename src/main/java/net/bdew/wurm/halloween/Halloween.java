@@ -97,6 +97,8 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
         try {
             CustomAchievements.register();
             CustomItems.registerGravestone();
+            CustomItems.registerHat();
+            CustomItems.registerMask();
             CustomCreatures.createEvilTreeTemplate();
             CustomCreatures.createPumpkinMonsterTemplate();
         } catch (NoSuchFieldException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | IOException e) {

@@ -1,0 +1,20 @@
+<armor>
+    <helmets>
+        <model.armour.head.hat.witch>
+            <default>
+                <male>
+                    <showHair/>
+                </male>
+            </default>
+        </model.armour.head.hat.witch>
+
+        <model.armour.head.hat.witch.leather>
+            <default>
+                <male>
+                    <showHair/>
+                </male>
+            </default>
+        </model.armour.head.hat.witch.leather>
+    </helmets>
+
+</armor>

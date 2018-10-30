@@ -142,7 +142,7 @@ public class InvestigateGravestoneAction implements ModAction, ActionPerformer, 
         } else if (roll < 20) {
             comm.sendAlertServerMessage("Braaaaainsssss!", (byte) 1);
             spawnAttackers(performer, CreatureTemplateIds.ZOMBIE_CID, 5, true);
-        } else if (roll < 30) {
+        } else if (roll < 25) {
             comm.sendAlertServerMessage("BZZZZZZZZT!", (byte) 1);
             Methods.sendSound(performer, "sound.magicTurret.attack");
             Zones.flash(performer.getTileX(), performer.getTileY(), true);
@@ -151,7 +151,7 @@ public class InvestigateGravestoneAction implements ModAction, ActionPerformer, 
                 if (vz.getWatcher().isPlayer() && vz.getWatcher().hasLink())
                     vz.getWatcher().getCommunicator().sendAddEffect(gravestone.getWurmId() + 2, performer.getWurmId(), (short) 27, performer.getPosX(), performer.getPosY(), performer.getPositionZ(), (byte) 0, "lightningBolt1", 5f, 0f);
             }
-        } else if (roll < 40) {
+        } else if (roll < 30) {
             comm.sendAlertServerMessage("Is a trap!", (byte) 1);
             Methods.sendSound(performer, "sound.magicTurret.attack");
             VolaTile vt = Zones.getOrCreateTile(gravestone.getTilePos(), gravestone.isOnSurface());
@@ -160,8 +160,8 @@ public class InvestigateGravestoneAction implements ModAction, ActionPerformer, 
                     vz.getWatcher().getCommunicator().sendAddEffect(gravestone.getWurmId() + 2, gravestone.getWurmId(), (short) 27, gravestone.getPosX(), gravestone.getPosY(), gravestone.getPosZ(), (byte) 0, "karmaFireball", 10f, 0f);
             }
             addMagicDamage(null, performer, 2, 10000, Wound.TYPE_BURN);
-        } else if (roll < 50) {
-            comm.sendAlertServerMessage("HAHAHAHAHAHAHA!", (byte) 1);
+        } else if (roll < 40) {
+            comm.sendAlertServerMessage("OoooOOoooOoooOoooo!", (byte) 1);
             SpellEffects effs = performer.getSpellEffects();
             if (effs == null) {
                 effs = performer.createSpellEffects();
@@ -208,6 +208,22 @@ public class InvestigateGravestoneAction implements ModAction, ActionPerformer, 
                     performer.setModelName(itf.getTemplate(ItemList.crateLarge).getModelName());
                     break;
             }
+        } else if (roll < 45) {
+            Item hat = ItemFactory.createItem(CustomItems.hatId, 90f + Server.rand.nextFloat() * 10f, ItemMaterials.MATERIAL_COTTON, makeRarity(10, false), null);
+            performer.getInventory().insertItem(hat);
+            comm.sendNormalServerMessage("You find a funny looking hat!");
+        } else if (roll < 50) {
+            int roll2 = Server.rand.nextInt(10);
+            byte material = Materials.MATERIAL_BONE;
+            if (roll2 == 9)
+                material = Materials.MATERIAL_GOLD;
+            else if (roll2 == 8)
+                material = Materials.MATERIAL_SILVER;
+            else if (roll2 >= 6)
+                material = Materials.MATERIAL_SLATE;
+            Item mask = ItemFactory.createItem(CustomItems.maskId, 90f + Server.rand.nextFloat() * 10f, material, makeRarity(10, false), null);
+            performer.getInventory().insertItem(mask);
+            comm.sendNormalServerMessage("You find a creepy skull that someone fashioned into a mask!.. Is it human?!?");
         } else if (roll < 60) {
             Item gem = ItemFactory.createItem(randomGem(true), 90f + Server.rand.nextFloat() * 10f, ItemMaterials.MATERIAL_CRYSTAL, makeRarity(10, false), null);
             performer.getInventory().insertItem(gem);

@@ -1,2 +1,13 @@
-model.creature.eviltree         = ominoustree/main.wom
-model.creature.pumpkinmonster   = scarypumpkin/main.wom
+model.creature.eviltree                     = ominoustree/main.wom
+model.creature.pumpkinmonster               = scarypumpkin/main.wom
+
+model.armour.head.mask.skull			    = mask/skullMask.wom
+model.armour.head.mask.skull.bone		    = mask/skullMask.wom
+model.armour.head.mask.skull.gold		    = mask/skullMask.wom?skullMaskMat.texture=skullMask_gold.dds
+model.armour.head.mask.skull.silver		    = mask/skullMask.wom?skullMaskMat.texture=skullMask_silver.dds
+model.armour.head.mask.skull.slate	        = mask/skullMask.wom?skullMaskMat.texture=skullMask_bl.dds
+
+model.armour.head.hat.witch			        = hat/witchHat.wom
+model.armour.head.hat.witch.cotton		    = hat/witchHat.wom
+
+armor.xml                                   = armor.xml

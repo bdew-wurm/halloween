@@ -1,0 +1,24 @@
+<properties>
+    <skullMask.wom>
+        <maps>
+            <skullMask_bl.dds>
+                <normal>skullMask_n.dds</normal>
+            </skullMask_bl.dds>
+
+            <skullMask_gold.dds>
+                <normal>skullMask_n.dds</normal>
+            </skullMask_gold.dds>
+
+            <skullMask_silver.dds>
+                <normal>skullMask_n.dds</normal>
+            </skullMask_silver.dds>
+        </maps>
+        <offsetToNull>
+            <NullHelmet>
+                <yPos>-0.055</yPos>
+                <zPos>0.043</zPos>
+                <xRot>70</xRot>
+            </NullHelmet>
+        </offsetToNull>
+    </skullMask.wom>
+</properties>
