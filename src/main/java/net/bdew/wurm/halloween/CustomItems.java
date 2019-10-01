@@ -2,8 +2,7 @@ package net.bdew.wurm.halloween;
 
 import com.wurmonline.server.bodys.BodyTemplate;
 import com.wurmonline.server.combat.ArmourTemplate;
-import com.wurmonline.server.items.ItemTemplate;
-import com.wurmonline.server.items.ItemTypes;
+import com.wurmonline.server.items.*;
 import com.wurmonline.server.skills.SkillList;
 import com.wurmonline.shared.constants.IconConstants;
 import com.wurmonline.shared.constants.ItemMaterials;
@@ -12,7 +11,7 @@ import org.gotti.wurmunlimited.modsupport.ItemTemplateBuilder;
 import java.io.IOException;
 
 public class CustomItems {
-    public static int gravestoneId, hatId, maskId;
+    public static int gravestoneId, hatId, maskId, pumpkinHelmId;
 
     static void registerGravestone() throws IOException {
         ItemTemplate temp = new ItemTemplateBuilder("bdew.halloween.gravestone")
@@ -84,5 +83,38 @@ public class CustomItems {
                 .build();
 
         maskId = temp.getTemplateId();
+    }
+
+    static void registerPumpkinHelm() throws IOException {
+        ItemTemplate temp = new ItemTemplateBuilder("bdew.halloween.helm")
+                .name("pumpkin helmet", "pumpkin helmet", "A spooky pumpkin attached to a metal helmet.")
+                .imageNumber((short) IconConstants.ICON_FOOD_PUMPKIN)
+                .modelName("model.armour.head.pumpkin.")
+                .weightGrams(1000)
+                .dimensions(5, 20, 20)
+                .decayTime(3024000L)
+                .value(10000)
+                .material(ItemMaterials.MATERIAL_IRON)
+                .behaviourType((short) 1)
+                .bodySpaces(new byte[]{BodyTemplate.head, BodyTemplate.secondHead})
+                .primarySkill(SkillList.SMITHING_ARMOUR_PLATE)
+                .difficulty(50)
+                .itemTypes(new short[]{
+                        ItemTypes.ITEM_TYPE_NAMED,
+                        ItemTypes.ITEM_TYPE_ARMOUR,
+                        ItemTypes.ITEM_TYPE_METAL,
+                        ItemTypes.ITEM_TYPE_DECORATION,
+                        ItemTypes.ITEM_TYPE_IMPROVEITEM,
+                        ItemTypes.ITEM_TYPE_REPAIRABLE,
+                        ItemTypes.ITEM_TYPE_COLORABLE
+                })
+                .build();
+
+        pumpkinHelmId = temp.getTemplateId();
+
+        new ArmourTemplate(pumpkinHelmId, ArmourTemplate.ARMOUR_TYPE_PLATE, 0.01F);
+
+        if (ModConfig.craftablePumpkinHelm)
+            CreationEntryCreator.createSimpleEntry(SkillList.SMITHING_ARMOUR_PLATE, ItemList.pumpkinHalloween, ItemList.helmetGreat, pumpkinHelmId, true, true, 0f, false, false, CreationCategories.ARMOUR);
     }
 }

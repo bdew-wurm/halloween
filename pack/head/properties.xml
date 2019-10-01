@@ -1,0 +1,14 @@
+<properties>
+    <pumpkinHead.wom>
+        <offsetToNull>
+            <NullHelmet>
+                <xPos>0.0</xPos>
+                <yPos>-0.2</yPos>
+                <zPos>0.0</zPos>
+                <xRot>0.0</xRot>
+                <yRot>0.0</yRot>
+                <zRot>0.0</zRot>
+            </NullHelmet>
+        </offsetToNull>
+    </pumpkinHead.wom>
+</properties>

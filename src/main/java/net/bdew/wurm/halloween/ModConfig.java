@@ -19,4 +19,6 @@ public class ModConfig {
 
     public static int pumpkinSmasherTitleId = 5100;
     public static int graveRobberTitleId = 5101;
+
+    public static boolean craftablePumpkinHelm = true;
 }

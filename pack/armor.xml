@@ -1,20 +1,12 @@
 <armor>
     <helmets>
-        <model.armour.head.hat.witch>
+        <model.armour.head.pumpkin>
             <default>
                 <male>
-                    <showHair/>
+                    <removeHead/>
+                    <removeMask/>
                 </male>
             </default>
-        </model.armour.head.hat.witch>
-
-        <model.armour.head.hat.witch.leather>
-            <default>
-                <male>
-                    <showHair/>
-                </male>
-            </default>
-        </model.armour.head.hat.witch.leather>
+        </model.armour.head.pumpkin>
     </helmets>
-
 </armor>

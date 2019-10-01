@@ -53,6 +53,8 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
         ModConfig.gravestoneLooterAchId = Integer.parseInt(properties.getProperty("gravestoneLooterAchId", "4102"));
         ModConfig.pumpkinSmasherTitleId = Integer.parseInt(properties.getProperty("pumpkinSmasherTitleId", "5100"));
         ModConfig.graveRobberTitleId = Integer.parseInt(properties.getProperty("graveRobberTitleId", "5101"));
+
+        ModConfig.craftablePumpkinHelm = Boolean.parseBoolean(properties.getProperty("craftablePumpkinHelm", "true"));
     }
 
     @Override
@@ -99,6 +101,7 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
             CustomItems.registerGravestone();
             CustomItems.registerHat();
             CustomItems.registerMask();
+            CustomItems.registerPumpkinHelm();
             CustomCreatures.createEvilTreeTemplate();
             CustomCreatures.createPumpkinMonsterTemplate();
         } catch (NoSuchFieldException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | IOException e) {
