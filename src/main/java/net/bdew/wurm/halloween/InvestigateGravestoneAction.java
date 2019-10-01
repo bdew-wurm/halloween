@@ -220,7 +220,7 @@ public class InvestigateGravestoneAction implements ModAction, ActionPerformer, 
             else if (roll2 == 8)
                 material = Materials.MATERIAL_SILVER;
             else if (roll2 >= 6)
-                material = Materials.MATERIAL_SLATE;
+                material = Materials.MATERIAL_WOOD_OLEANDER;
             Item mask = ItemFactory.createItem(CustomItems.maskId, 90f + Server.rand.nextFloat() * 10f, material, makeRarity(10, false), null);
             performer.getInventory().insertItem(mask);
             comm.sendNormalServerMessage("You find a creepy skull that someone fashioned into a mask!.. Is it human?!?");
