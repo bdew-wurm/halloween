@@ -1,5 +1,6 @@
 package net.bdew.wurm.halloween;
 
+import com.wurmonline.server.creatures.Communicator;
 import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
@@ -18,7 +19,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Halloween implements WurmServerMod, Initable, PreInitable, Configurable, ItemTemplatesCreatedListener, ServerStartedListener, ServerPollListener {
+public class Halloween implements WurmServerMod, Initable, PreInitable, Configurable, ItemTemplatesCreatedListener, ServerStartedListener, ServerPollListener, PlayerMessageListener {
     private static final Logger logger = Logger.getLogger("Halloween");
 
     public static void logException(String msg, Throwable e) {
@@ -122,5 +123,19 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
     @Override
     public void onServerPoll() {
         GravestoneTracker.tick();
+    }
+
+
+    @Override
+    @Deprecated
+    public boolean onPlayerMessage(Communicator communicator, String message) {
+        return false;
+    }
+
+    @Override
+    public MessagePolicy onPlayerMessage(Communicator communicator, String message, String title) {
+        if (communicator.player.getPower() > 0 && message.startsWith("#"))
+            return CommandHandler.handleCommand(communicator, message);
+        return MessagePolicy.PASS;
     }
 }

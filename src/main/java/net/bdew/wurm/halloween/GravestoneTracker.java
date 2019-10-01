@@ -39,7 +39,7 @@ public class GravestoneTracker {
 
     public static void tick() {
         if (gravestones.size() < ModConfig.gravestoneCount)
-            spawnGravestone();
+            spawnRandomGravestone();
         if (System.currentTimeMillis() - lastCheck > 10000) {
             lastCheck = System.currentTimeMillis();
             for (Item gravestone : new LinkedList<>(gravestones)) {
@@ -60,7 +60,28 @@ public class GravestoneTracker {
             Halloween.logInfo(String.format("Loaded %d gravestones", gravestones.size()));
     }
 
-    private static void spawnGravestone() {
+    public static void spawnGravestoneAt(VolaTile vt) {
+        try {
+            Item gravestone = ItemFactory.createItem(CustomItems.gravestoneId, 99f, (byte) 0, null);
+            vt.addItem(gravestone, false, false);
+            Halloween.logInfo(String.format("Spawned gravestone at %d,%d", vt.tilex, vt.tiley));
+            addGravestone(gravestone);
+            for (int i = 0; i < ModConfig.guardianCount; i++) {
+                try {
+                    Creature spawned = Creature.doNew(Server.rand.nextInt(ModConfig.guardianChamps) == 0 ? CustomCreatures.treeId : CustomCreatures.pumpkinId, Server.rand.nextInt(4) == 0 ? CreatureTypes.C_MOD_CHAMPION : CreatureTypes.C_MOD_NONE, gravestone.getPosX() - 5f + Server.rand.nextFloat() * 10, gravestone.getPosY() - 5f + Server.rand.nextFloat() * 10, Server.rand.nextInt(360), gravestone.isOnSurface() ? 0 : -1, "", (byte) 0);
+                    GuardianCreatureAIData.get(spawned).guarded = gravestone;
+                    addGuard(gravestone, spawned);
+                } catch (Exception e) {
+                    Halloween.logException("Error spawning defenders for gravestone", e);
+                }
+            }
+        } catch (FailedException | NoSuchTemplateException e) {
+            Halloween.logException("Error spawning gravestone", e);
+        }
+
+    }
+
+    private static void spawnRandomGravestone() {
         int tileX = Server.rand.nextInt(Zones.worldTileSizeX);
         int tileY = Server.rand.nextInt(Zones.worldTileSizeY);
         int tile = Server.surfaceMesh.getTile(tileX, tileY);
@@ -86,24 +107,6 @@ public class GravestoneTracker {
 
         if (woodTiles < 5) return;
 
-        try {
-            Item gravestone = ItemFactory.createItem(CustomItems.gravestoneId, 99f, (byte) 0, null);
-            vt.addItem(gravestone, false, false);
-            Halloween.logInfo(String.format("Spawned gravestone at %d,%d", tileX, tileY));
-            addGravestone(gravestone);
-
-            for (int i = 0; i < ModConfig.guardianCount; i++) {
-                try {
-                    Creature spawned = Creature.doNew(Server.rand.nextInt(ModConfig.guardianChamps) == 0 ? CustomCreatures.treeId : CustomCreatures.pumpkinId, Server.rand.nextInt(4) == 0 ? CreatureTypes.C_MOD_CHAMPION : CreatureTypes.C_MOD_NONE, gravestone.getPosX() - 5f + Server.rand.nextFloat() * 10, gravestone.getPosY() - 5f + Server.rand.nextFloat() * 10, Server.rand.nextInt(360), gravestone.isOnSurface() ? 0 : -1, "", (byte) 0);
-                    GuardianCreatureAIData.get(spawned).guarded = gravestone;
-                    addGuard(gravestone, spawned);
-                } catch (Exception e) {
-                    Halloween.logException("Error spawning defenders for gravestone", e);
-                }
-            }
-        } catch (FailedException | NoSuchTemplateException e) {
-            Halloween.logException("Error spawning gravestone", e);
-        }
-
+        spawnGravestoneAt(vt);
     }
 }
