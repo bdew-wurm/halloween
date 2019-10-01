@@ -159,7 +159,7 @@ public class InvestigateGravestoneAction implements ModAction, ActionPerformer, 
                 if (vz.getWatcher().isPlayer() && vz.getWatcher().hasLink())
                     vz.getWatcher().getCommunicator().sendAddEffect(gravestone.getWurmId() + 2, gravestone.getWurmId(), (short) 27, gravestone.getPosX(), gravestone.getPosY(), gravestone.getPosZ(), (byte) 0, "karmaFireball", 10f, 0f);
             }
-            addMagicDamage(null, performer, 2, 10000, Wound.TYPE_BURN);
+            addMagicDamage(null, performer, 2, 10000, Wound.TYPE_BURN, false);
         } else if (roll < 40) {
             comm.sendAlertServerMessage("OoooOOoooOoooOoooo!", (byte) 1);
             SpellEffects effs = performer.getSpellEffects();
@@ -321,8 +321,7 @@ public class InvestigateGravestoneAction implements ModAction, ActionPerformer, 
         }
     }
 
-    public static void addMagicDamage(final Creature performer, final Creature defender, final int pos,
-                                      double damage, byte type) {
+    public static void addMagicDamage(final Creature performer, final Creature defender, final int pos, double damage, byte type, boolean spell) {
         if (performer != null && performer.getTemplate().getCreatureAI() != null)
             damage = performer.getTemplate().getCreatureAI().causedWound(performer, defender, type, pos, 1, damage);
         if (defender != null && defender.getTemplate().getCreatureAI() != null)
@@ -333,16 +332,15 @@ public class InvestigateGravestoneAction implements ModAction, ActionPerformer, 
                 if (wound != null && wound.getType() == type) {
                     defender.setWounded();
                     wound.setBandaged(false);
-                    wound.modifySeverity((int) (damage), performer != null && performer.isPlayer());
+                    wound.modifySeverity((int) (damage), performer != null && performer.isPlayer(), spell);
                 }
             }
             if (WurmId.getType(defender.getWurmId()) == 1) {
-                defender.getBody().addWound(new TempWound(type, (byte) pos, (float) damage, defender.getWurmId(), 0.0f, 0.0f));
+                defender.getBody().addWound(new TempWound(type, (byte) pos, (float) damage, defender.getWurmId(), 0.0f, 0.0f, spell));
             } else {
-                defender.getBody().addWound(new DbWound(type, (byte) pos, (float) damage, defender.getWurmId(), 0.0f, 0.0f, performer != null && performer.isPlayer()));
+                defender.getBody().addWound(new DbWound(type, (byte) pos, (float) damage, defender.getWurmId(), 0.0f, 0.0f, performer != null && performer.isPlayer(), spell));
             }
         }
-        ;
     }
 
 

@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    compile 'org.gotti.wurmunlimited:server-modlauncher:0.40'
+    compile 'org.gotti.wurmunlimited:server-modlauncher:0.43'
 }
 
 jar {
@@ -19,7 +19,7 @@ jar {
 
 task pack(type: Zip) {
     from fileTree(dir: 'pack', include: '**')
-    destinationDir = file("build/pack")
+    destinationDirectory = file("build/pack")
     archiveName "halloween-pack.zip"
 }
 
