@@ -13,6 +13,7 @@ import org.gotti.wurmunlimited.modsupport.actions.ModActions;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,6 +56,7 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
         ModConfig.graveRobberTitleId = Integer.parseInt(properties.getProperty("graveRobberTitleId", "5101"));
 
         ModConfig.craftablePumpkinHelm = Boolean.parseBoolean(properties.getProperty("craftablePumpkinHelm", "true"));
+        ModConfig.updateMaskMaterials = Boolean.parseBoolean(properties.getProperty("updateMaskMaterials", "true"));
     }
 
     @Override
@@ -102,9 +104,11 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
             CustomItems.registerHat();
             CustomItems.registerMask();
             CustomItems.registerPumpkinHelm();
+            if (ModConfig.updateMaskMaterials)
+                DbFix.fixMaskMaterial();
             CustomCreatures.createEvilTreeTemplate();
             CustomCreatures.createPumpkinMonsterTemplate();
-        } catch (NoSuchFieldException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | IOException e) {
+        } catch (NoSuchFieldException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | IOException | SQLException e) {
             throw new RuntimeException(e);
         }
     }

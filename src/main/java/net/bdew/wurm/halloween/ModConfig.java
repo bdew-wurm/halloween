@@ -21,4 +21,5 @@ public class ModConfig {
     public static int graveRobberTitleId = 5101;
 
     public static boolean craftablePumpkinHelm = true;
+    public static boolean updateMaskMaterials = true;
 }
