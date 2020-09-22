@@ -2,3 +2,5 @@ model.creature.eviltree         = ominoustree/main.wom
 model.creature.pumpkinmonster   = scarypumpkin/main.wom
 model.armour.head.pumpkin       = head/pumpkinHead.wom
 armor.xml                       = armor.xml
+
+model.transports.broom		= broom/broom.wom

@@ -1,0 +1,9 @@
+<properties>
+    <broom.wom>
+        <jointProperties>
+            <NullMount0>
+                <mountrotation>90</mountrotation>
+            </NullMount0>
+        </jointProperties>
+    </broom.wom>
+</properties>

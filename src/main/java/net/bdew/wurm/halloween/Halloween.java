@@ -5,15 +5,14 @@ import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.NotFoundException;
-import javassist.bytecode.BadBytecode;
 import net.bdew.wurm.halloween.titles.CustomAchievements;
 import net.bdew.wurm.halloween.titles.CustomTitles;
 import org.gotti.wurmunlimited.modloader.classhooks.HookManager;
 import org.gotti.wurmunlimited.modloader.interfaces.*;
 import org.gotti.wurmunlimited.modsupport.actions.ModActions;
+import org.gotti.wurmunlimited.modsupport.vehicles.ModVehicleBehaviours;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -63,6 +62,7 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
     @Override
     public void preInit() {
         ModActions.init();
+        ModVehicleBehaviours.init();
 
         try {
             ClassPool classPool = HookManager.getInstance().getClassPool();
@@ -108,7 +108,8 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
                 DbFix.fixMaskMaterial();
             CustomCreatures.createEvilTreeTemplate();
             CustomCreatures.createPumpkinMonsterTemplate();
-        } catch (NoSuchFieldException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | IOException | SQLException e) {
+            Broom.register();
+        } catch (NoSuchFieldException | IllegalAccessException | IOException | SQLException e) {
             throw new RuntimeException(e);
         }
     }
