@@ -84,9 +84,9 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
             ctZone.getMethod("addItem", "(Lcom/wurmonline/server/items/Item;ZZZ)V")
                     .insertAfter("if ($4) net.bdew.wurm.halloween.Hooks.addItemLoading($1);");
 
-            CustomTitles.register(classPool);
+            CustomTitles.register();
 
-        } catch (CannotCompileException | BadBytecode | NotFoundException e) {
+        } catch (CannotCompileException | NotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -94,7 +94,6 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
 
     @Override
     public void init() {
-
     }
 
     @Override
