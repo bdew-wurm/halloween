@@ -1,9 +1,25 @@
 <properties>
     <broom.wom>
-        <jointProperties>
-            <NullMount0>
-                <mountrotation>90</mountrotation>
-            </NullMount0>
-        </jointProperties>
+        <modelProperties>
+            <mountNotRotateGround/>
+            <swimHeight>0.5</swimHeight>
+            <meshMask>
+                <mesh>shaft-1</mesh>
+                <mask>primary_pm.png</mask>
+            </meshMask>
+            <meshMask>
+                <mesh>shaft-2</mesh>
+                <mask>primary_pm.png</mask>
+            </meshMask>
+            <meshMask>
+                <mesh>thatch-1</mesh>
+                <mask>secondary_pm.png</mask>
+            </meshMask>
+        </modelProperties>
+        <customEffect>
+            <stonedust>
+                <nullName>dust</nullName>
+            </stonedust>
+        </customEffect>
     </broom.wom>
 </properties>

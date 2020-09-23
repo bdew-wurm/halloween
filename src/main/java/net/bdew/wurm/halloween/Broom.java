@@ -34,11 +34,16 @@ public class Broom {
                         ItemTypes.ITEM_TYPE_NOT_MISSION,
                         ItemTypes.ITEM_TYPE_DECORATION,
                         ItemTypes.ITEM_TYPE_VEHICLE,
-                        ItemTypes.ITEM_TYPE_OWNER_MOVEABLE,
-                        ItemTypes.ITEM_TYPE_OWNER_TURNABLE,
+                        ItemTypes.ITEM_TYPE_TURNABLE,
                         ItemTypes.ITEM_TYPE_REPAIRABLE,
+                        ItemTypes.ITEM_TYPE_COLORABLE,
+                        ItemTypes.ITEM_TYPE_SUPPORTS_SECONDARY_COLOR,
+//                        ItemTypes.ITEM_TYPE_FLOATING,
                 })
                 .build();
+
+        template.setSecondryItem("thatch");
+        template.setDyeAmountGrams(100, 150);
 
         broomId = template.getTemplateId();
 
@@ -51,12 +56,12 @@ public class Broom {
             public void setSettingsForVehicle(Item item, Vehicle vehicle) {
                 VehicleFacade facade = wrap(vehicle);
                 facade.createPassengerSeats(0);
-                facade.setSeatOffset(0, 0, 0, 0);
+//                facade.setCommandType((byte) 1);
+                facade.setSeatOffset(0, -0.43f, 0, 0f);
                 facade.setSeatFightMod(0, 0.7f, 0.9f);
-                facade.setMaxSpeed(1);
-                facade.setMaxDepth(-2500);
-                facade.setMaxHeightDiff(0.04f);
-                vehicle.setMaxAllowedLoadDistance(0);
+                facade.setMaxSpeed(4);
+                facade.setMaxDepth(-2499.99f); // must be > -2500 due to wogic
+                facade.setMaxHeightDiff(0.12f);
                 vehicle.setSkillNeeded(0);
             }
         });
