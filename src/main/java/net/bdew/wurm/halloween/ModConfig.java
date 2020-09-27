@@ -22,4 +22,6 @@ public class ModConfig {
 
     public static boolean craftablePumpkinHelm = true;
     public static boolean updateMaskMaterials = true;
+
+    public static boolean craftableMagicCandle = true;
 }

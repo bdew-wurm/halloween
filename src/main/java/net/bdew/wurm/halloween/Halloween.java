@@ -57,6 +57,8 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
 
         ModConfig.craftablePumpkinHelm = Boolean.parseBoolean(properties.getProperty("craftablePumpkinHelm", "true"));
         ModConfig.updateMaskMaterials = Boolean.parseBoolean(properties.getProperty("updateMaskMaterials", "true"));
+
+        ModConfig.craftableMagicCandle = Boolean.parseBoolean(properties.getProperty("craftableMagicCandle", "true"));
     }
 
     @Override
@@ -104,6 +106,7 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
             CustomItems.registerHat();
             CustomItems.registerMask();
             CustomItems.registerPumpkinHelm();
+            CustomItems.registerCandles();
             if (ModConfig.updateMaskMaterials)
                 DbFix.fixMaskMaterial();
             CustomCreatures.createEvilTreeTemplate();

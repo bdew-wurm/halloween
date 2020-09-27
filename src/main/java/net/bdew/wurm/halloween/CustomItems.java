@@ -1,5 +1,6 @@
 package net.bdew.wurm.halloween;
 
+import com.wurmonline.server.TimeConstants;
 import com.wurmonline.server.bodys.BodyTemplate;
 import com.wurmonline.server.combat.ArmourTemplate;
 import com.wurmonline.server.items.*;
@@ -11,7 +12,7 @@ import org.gotti.wurmunlimited.modsupport.ItemTemplateBuilder;
 import java.io.IOException;
 
 public class CustomItems {
-    public static int gravestoneId, hatId, maskId, pumpkinHelmId;
+    public static int gravestoneId, hatId, maskId, pumpkinHelmId, candleId, candleInfId;
 
     static void registerGravestone() throws IOException {
         ItemTemplate temp = new ItemTemplateBuilder("bdew.halloween.gravestone")
@@ -54,7 +55,8 @@ public class CustomItems {
                         ItemTypes.ITEM_TYPE_CLOTH,
                         ItemTypes.ITEM_TYPE_DECORATION,
                         ItemTypes.ITEM_TYPE_IMPROVEITEM,
-                        ItemTypes.ITEM_TYPE_REPAIRABLE
+                        ItemTypes.ITEM_TYPE_REPAIRABLE,
+                        ItemTypes.ITEM_TYPE_NOT_MISSION
                 })
                 .build();
 
@@ -78,7 +80,8 @@ public class CustomItems {
                         ItemTypes.ITEM_TYPE_ARMOUR,
                         ItemTypes.ITEM_TYPE_DECORATION,
                         ItemTypes.ITEM_TYPE_REPAIRABLE,
-                        ItemTypes.ITEM_TYPE_NO_IMPROVE
+                        ItemTypes.ITEM_TYPE_NO_IMPROVE,
+                        ItemTypes.ITEM_TYPE_NOT_MISSION
                 })
                 .build();
 
@@ -106,7 +109,8 @@ public class CustomItems {
                         ItemTypes.ITEM_TYPE_DECORATION,
                         ItemTypes.ITEM_TYPE_IMPROVEITEM,
                         ItemTypes.ITEM_TYPE_REPAIRABLE,
-                        ItemTypes.ITEM_TYPE_COLORABLE
+                        ItemTypes.ITEM_TYPE_COLORABLE,
+                        ItemTypes.ITEM_TYPE_NOT_MISSION
                 })
                 .build();
 
@@ -116,5 +120,54 @@ public class CustomItems {
 
         if (ModConfig.craftablePumpkinHelm)
             CreationEntryCreator.createSimpleEntry(SkillList.SMITHING_ARMOUR_PLATE, ItemList.pumpkinHalloween, ItemList.helmetGreat, pumpkinHelmId, true, true, 0f, false, false, CreationCategories.ARMOUR);
+    }
+
+    static void registerCandles() throws IOException {
+        ItemTemplate candle = new ItemTemplateBuilder("bdew.halloween.candle")
+                .name("skull candle", "skull candle", "A candle made from tallow repeatedly dipped around a cloth wicker, it's placed on a skull.")
+                .modelName("model.light.candle.skull.")
+                .imageNumber((short) IconConstants.ICON_TOOL_CANDLE_LIT)
+                .weightGrams(50)
+                .dimensions(1, 1, 1)
+                .decayTime(TimeConstants.DECAYTIME_STONE)
+                .behaviourType((short) 1)
+                .itemTypes(new short[]{
+                        ItemTypes.ITEM_TYPE_LIGHT,
+                        ItemTypes.ITEM_TYPE_PLANTABLE,
+                        ItemTypes.ITEM_TYPE_LIGHT_BRIGHT,
+                        ItemTypes.ITEM_TYPE_DECORATION,
+                        ItemTypes.ITEM_TYPE_COLORABLE,
+                        ItemTypes.ITEM_TYPE_ALWAYSPOLL
+                })
+                .build();
+
+        candleId = candle.getTemplateId();
+
+        ItemTemplate candleInf = new ItemTemplateBuilder("bdew.halloween.candle.inf")
+                .name("magic skull candle", "magic skull candles", "A magic candle placed on a skull, it will burn for eternity.")
+                .modelName("model.light.candle.skull.")
+                .imageNumber((short) IconConstants.ICON_TOOL_CANDLE_LIT)
+                .weightGrams(50)
+                .dimensions(1, 1, 1)
+                .decayTime(TimeConstants.DECAYTIME_NEVER)
+                .behaviourType((short) 1)
+                .itemTypes(new short[]{
+                        ItemTypes.ITEM_TYPE_INDESTRUCTIBLE,
+                        ItemTypes.ITEM_TYPE_LIGHT,
+                        ItemTypes.ITEM_TYPE_ALWAYS_LIT,
+                        ItemTypes.ITEM_TYPE_PLANTABLE,
+                        ItemTypes.ITEM_TYPE_LIGHT_BRIGHT,
+                        ItemTypes.ITEM_TYPE_DECORATION,
+                        ItemTypes.ITEM_TYPE_COLORABLE,
+                        ItemTypes.ITEM_TYPE_NOT_MISSION
+                })
+                .build();
+
+        candleInfId = candleInf.getTemplateId();
+
+        CreationEntryCreator.createSimpleEntry(SkillList.ALCHEMY_NATURAL, ItemList.candle, ItemList.skullGoblin, candleId, true, true, 0f, false, false, CreationCategories.LIGHTS_AND_LAMPS);
+
+        if (ModConfig.craftablePumpkinHelm)
+            CreationEntryCreator.createSimpleEntry(SkillList.ALCHEMY_NATURAL, candleId, ItemList.sourceCrystal, candleInfId, true, true, 0f, false, false, CreationCategories.LIGHTS_AND_LAMPS);
     }
 }
