@@ -3,4 +3,7 @@ model.creature.pumpkinmonster   = scarypumpkin/main.wom
 model.armour.head.pumpkin       = head/pumpkinHead.wom
 armor.xml                       = armor.xml
 
-model.transports.broom		= broom/broom.wom
+model.transports.broom          = broom/broom.wom
+model.transports.broom.standing = broom/standing.wom
+
+model.light.candle.skull        = candle/candle.wom

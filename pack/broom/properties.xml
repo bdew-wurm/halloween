@@ -22,4 +22,20 @@
             </stonedust>
         </customEffect>
     </broom.wom>
+    <standing.wom>
+        <modelProperties>
+            <meshMask>
+                <mesh>shaft-1</mesh>
+                <mask>primary_pm.png</mask>
+            </meshMask>
+            <meshMask>
+                <mesh>shaft-2</mesh>
+                <mask>primary_pm.png</mask>
+            </meshMask>
+            <meshMask>
+                <mesh>thatch-1</mesh>
+                <mask>secondary_pm.png</mask>
+            </meshMask>
+        </modelProperties>
+    </standing.wom>
 </properties>
