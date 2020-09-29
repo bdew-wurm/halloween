@@ -1,9 +1,16 @@
-model.creature.eviltree         = ominoustree/main.wom
-model.creature.pumpkinmonster   = scarypumpkin/main.wom
-model.armour.head.pumpkin       = head/pumpkinHead.wom
-armor.xml                       = armor.xml
+model.creature.eviltree          = ominoustree/main.wom
+model.creature.pumpkinmonster    = scarypumpkin/main.wom
 
-model.transports.broom          = broom/broom.wom
-model.transports.broom.standing = broom/standing.wom
+model.armour.head.pumpkin        = head/pumpkinHead.wom
+armor.xml                        = armor.xml
 
-model.light.candle.skull        = candle/candle.wom
+model.transports.broom           = broom/broom.wom
+model.transports.broom.standing  = broom/standing.wom
+
+model.light.candle.skull         = candle/candle.wom
+
+model.tool.cauldron.witch        = cauldron/cauldron.wom
+model.tool.cauldron.witch.stew   = cauldron/stew.wom
+model.tool.cauldron.witch.creepy = cauldron/creepy.wom
+
+model.wand.witch                 = wand/wand.wom

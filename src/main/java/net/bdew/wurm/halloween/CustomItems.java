@@ -13,6 +13,7 @@ import java.io.IOException;
 
 public class CustomItems {
     public static int gravestoneId, hatId, maskId, pumpkinHelmId, candleId, candleInfId;
+    public static int cauldronEmptyId, cauldronStewId, cauldronCreepyId, witchWandId;
 
     static void registerGravestone() throws IOException {
         ItemTemplate temp = new ItemTemplateBuilder("bdew.halloween.gravestone")
@@ -169,5 +170,111 @@ public class CustomItems {
 
         if (ModConfig.craftablePumpkinHelm)
             CreationEntryCreator.createSimpleEntry(SkillList.ALCHEMY_NATURAL, candleId, ItemList.sourceCrystal, candleInfId, true, true, 0f, false, false, CreationCategories.LIGHTS_AND_LAMPS);
+    }
+
+    static void registerCauldron() throws IOException {
+        ItemTemplate cauldronEmpty = new ItemTemplateBuilder("bdew.halloween.cauldron.empty")
+                .name("witch's cauldron", "witch's cauldrons", "A creepy cauldron adorned with skulls.")
+                .modelName("model.tool.cauldron.witch.")
+                .imageNumber((short) IconConstants.ICON_TOOL_CAULDRON)
+                .weightGrams(5000)
+                .dimensions(40, 40, 40)
+                .decayTime(TimeConstants.DECAYTIME_STEEL)
+                .behaviourType((short) 1)
+                .difficulty(30)
+                .material(Materials.MATERIAL_IRON)
+                .itemTypes(new short[]{
+                        ItemTypes.ITEM_TYPE_METAL,
+                        ItemTypes.ITEM_TYPE_PLANTABLE,
+                        ItemTypes.ITEM_TYPE_DECORATION,
+                        ItemTypes.ITEM_TYPE_TURNABLE,
+                        ItemTypes.ITEM_TYPE_NOT_MISSION,
+                        ItemTypes.ITEM_TYPE_REPAIRABLE
+                })
+                .build();
+
+        cauldronEmptyId = cauldronEmpty.getTemplateId();
+
+        ItemTemplate cauldronStew = new ItemTemplateBuilder("bdew.halloween.cauldron.stew")
+                .name("witch's stew cauldron", "witch's stew cauldrons", "A creepy cauldron adorned with skulls. It's full of pumpkin stew.")
+                .modelName("model.tool.cauldron.witch.stew.")
+                .imageNumber((short) IconConstants.ICON_TOOL_CAULDRON)
+                .weightGrams(5000)
+                .dimensions(40, 40, 40)
+                .decayTime(TimeConstants.DECAYTIME_STEEL)
+                .behaviourType((short) 1)
+                .difficulty(30)
+                .material(Materials.MATERIAL_IRON)
+                .itemTypes(new short[]{
+                        ItemTypes.ITEM_TYPE_METAL,
+                        ItemTypes.ITEM_TYPE_PLANTABLE,
+                        ItemTypes.ITEM_TYPE_DECORATION,
+                        ItemTypes.ITEM_TYPE_TURNABLE,
+                        ItemTypes.ITEM_TYPE_NOT_MISSION,
+                        ItemTypes.ITEM_TYPE_REPAIRABLE
+                })
+                .build();
+
+        cauldronStewId = cauldronStew.getTemplateId();
+
+        ItemTemplate cauldronCreepy = new ItemTemplateBuilder("bdew.halloween.cauldron.creepy")
+                .name("disgusting stew cauldron", "disgusting stew cauldrons", "A creepy cauldron adorned with skulls. It contains something disgusting and smelly.")
+                .modelName("model.tool.cauldron.witch.creepy.")
+                .imageNumber((short) IconConstants.ICON_TOOL_CAULDRON)
+                .weightGrams(5000)
+                .dimensions(40, 40, 40)
+                .decayTime(TimeConstants.DECAYTIME_STEEL)
+                .behaviourType((short) 1)
+                .difficulty(30)
+                .material(Materials.MATERIAL_IRON)
+                .itemTypes(new short[]{
+                        ItemTypes.ITEM_TYPE_METAL,
+                        ItemTypes.ITEM_TYPE_PLANTABLE,
+                        ItemTypes.ITEM_TYPE_DECORATION,
+                        ItemTypes.ITEM_TYPE_TURNABLE,
+                        ItemTypes.ITEM_TYPE_NOT_MISSION,
+                        ItemTypes.ITEM_TYPE_REPAIRABLE
+                })
+                .build();
+
+        cauldronCreepyId = cauldronCreepy.getTemplateId();
+
+        CreationEntryCreator.createAdvancedEntry(SkillList.SMITHING_BLACKSMITHING, ItemList.cauldron, ItemList.skullGoblin, cauldronEmptyId, false, false, 0f, true, false, CreationCategories.DECORATION)
+                .addRequirement(new CreationRequirement(1, ItemList.skullGoblin, 1, true))
+                .addRequirement(new CreationRequirement(2, ItemList.nailsIronSmall, 2, true));
+
+        CreationEntryCreator.createAdvancedEntry(SkillList.SMITHING_BLACKSMITHING, cauldronEmptyId, ItemList.water, cauldronStewId, false, false, 0f, true, false, CreationCategories.DECORATION)
+                .addRequirement(new CreationRequirement(1, ItemList.pumpkin, 3, true))
+                .addRequirement(new CreationRequirement(2, ItemList.sugar, 2, true));
+
+        CreationEntryCreator.createAdvancedEntry(SkillList.SMITHING_BLACKSMITHING, cauldronEmptyId, ItemList.water, cauldronCreepyId, false, false, 0f, true, false, CreationCategories.DECORATION)
+                .addRequirement(new CreationRequirement(1, ItemList.skullGoblin, 1, true))
+                .addRequirement(new CreationRequirement(2, ItemList.eye, 2, true))
+                .addRequirement(new CreationRequirement(3, ItemList.heart, 3, true))
+                .addRequirement(new CreationRequirement(4, ItemList.meat, 2, true));
+    }
+
+    static void registerWand() throws IOException {
+        ItemTemplate witchWand = new ItemTemplateBuilder("bdew.halloween.wand")
+                .name("witch's wand", "witch's wands", "A magic wand enchanted with dark magic.")
+                .modelName("model.wand.witch.")
+                .imageNumber((short) IconConstants.ICON_WAND_SILVER)
+                .weightGrams(100)
+                .dimensions(1, 1, 1)
+                .decayTime(TimeConstants.DECAYTIME_NEVER)
+                .behaviourType((short) 1)
+                .material(Materials.MATERIAL_WOOD_BIRCH)
+                .itemTypes(new short[]{
+                        ItemTypes.ITEM_TYPE_WOOD,
+                        ItemTypes.ITEM_TYPE_PLANTABLE,
+                        ItemTypes.ITEM_TYPE_DECORATION,
+                        ItemTypes.ITEM_TYPE_COLORABLE,
+                        ItemTypes.ITEM_TYPE_TURNABLE,
+                        ItemTypes.ITEM_TYPE_NOT_MISSION,
+                        ItemTypes.ITEM_TYPE_REPAIRABLE
+                })
+                .build();
+
+        witchWandId = witchWand.getTemplateId();
     }
 }

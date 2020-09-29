@@ -1,0 +1,10 @@
+<properties>
+    <wand.wom>
+        <modelProperties>
+            <meshMask>
+                <mesh>wood</mesh>
+                <mask>primary_pm.png</mask>
+            </meshMask>
+        </modelProperties>
+    </wand.wom>
+</properties>
