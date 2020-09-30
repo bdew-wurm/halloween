@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class CustomItems {
     public static int gravestoneId, hatId, maskId, pumpkinHelmId, candleId, candleInfId;
-    public static int cauldronEmptyId, cauldronStewId, cauldronCreepyId, witchWandId;
+    public static int cauldronEmptyId, cauldronStewId, cauldronCreepyId, witchWandId, coffinId;
 
     static void registerGravestone() throws IOException {
         ItemTemplate temp = new ItemTemplateBuilder("bdew.halloween.gravestone")
@@ -276,5 +276,34 @@ public class CustomItems {
                 .build();
 
         witchWandId = witchWand.getTemplateId();
+    }
+
+    static void registerCoffin() throws IOException {
+        ItemTemplate coffin = new ItemTemplateBuilder("bdew.halloween.coffin")
+                .name("coffin", "coffins", "A coffin made from wood, adorned with skulls and silver.")
+                .modelName("model.furniture.coffin.wood.")
+                .imageNumber((short) IconConstants.ICON_CONTAINER_CHEST_LARGE)
+                .weightGrams(20000)
+                .dimensions(50, 51, 201)
+                .decayTime(TimeConstants.DECAYTIME_WOOD)
+                .behaviourType((short) 1)
+                .material(Materials.MATERIAL_WOOD_BIRCH)
+                .itemTypes(new short[]{
+                        ItemTypes.ITEM_TYPE_WOOD,
+                        ItemTypes.ITEM_TYPE_PLANTABLE,
+                        ItemTypes.ITEM_TYPE_DECORATION,
+                        ItemTypes.ITEM_TYPE_TURNABLE,
+                        ItemTypes.ITEM_TYPE_NOT_MISSION,
+                        ItemTypes.ITEM_TYPE_REPAIRABLE
+                })
+                .build();
+
+        coffinId = coffin.getTemplateId();
+
+        CreationEntryCreator.createAdvancedEntry(SkillList.CARPENTRY_FINE, ItemList.plank, ItemList.nailsIronLarge, coffinId, false, false, 0f, true, false, CreationCategories.DECORATION)
+                .addRequirement(new CreationRequirement(1, ItemList.nailsIronLarge, 6, true))
+                .addRequirement(new CreationRequirement(2, ItemList.skullGoblin, 4, true))
+                .addRequirement(new CreationRequirement(3, ItemList.plank, 20, true))
+                .addRequirement(new CreationRequirement(4, ItemList.silverBar, 5, true));
     }
 }
