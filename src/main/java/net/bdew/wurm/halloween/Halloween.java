@@ -5,6 +5,7 @@ import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.NotFoundException;
+import net.bdew.wurm.halloween.actions.UseWandAction;
 import net.bdew.wurm.halloween.titles.CustomAchievements;
 import net.bdew.wurm.halloween.titles.CustomTitles;
 import org.gotti.wurmunlimited.modloader.classhooks.HookManager;
@@ -124,6 +125,7 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
     public void onServerStarted() {
         GravestoneTracker.started();
         ModActions.registerAction(new InvestigateGravestoneAction());
+        ModActions.registerAction(new UseWandAction());
     }
 
     @Override
