@@ -6,5 +6,24 @@
                 <mask>primary_pm.png</mask>
             </meshMask>
         </modelProperties>
+        <offsetToNull>
+            <NullLeftHand>
+                <xPos>0</xPos>
+                <yPos>-0.045</yPos>
+                <zPos>0</zPos>
+                <xRot>0</xRot>
+                <yRot>-90</yRot>
+                <zRot>-15</zRot>
+            </NullLeftHand>
+            <NullRightHand>
+                <xPos>0</xPos>
+                <yPos>-0.045</yPos>
+                <zPos>0</zPos>
+                <xRot>0</xRot>
+                <yRot>-90</yRot>
+                <zRot>-15</zRot>
+            </NullRightHand>
+        </offsetToNull>
+
     </wand.wom>
 </properties>

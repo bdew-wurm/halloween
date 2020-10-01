@@ -24,7 +24,7 @@ public class UseWandAction implements ModAction, ActionPerformer, BehaviourProvi
         actionEntry = new ActionEntryBuilder((short) ModActions.getNextActionId(), "Use wand", "waving wand", new int[]{
                 48 /* ACTION_TYPE_ENEMY_ALWAYS */,
                 36 /* ACTION_TYPE_ALWAYS_USE_ACTIVE_ITEM */
-        }).range(20).animationString("spell").build();
+        }).range(20).animationString("buildwoodenwall").build();
         ModActions.registerAction(actionEntry);
     }
 
