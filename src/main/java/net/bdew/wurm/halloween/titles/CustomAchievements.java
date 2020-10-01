@@ -10,7 +10,7 @@ import net.bdew.wurm.halloween.ModConfig;
 import net.bdew.wurm.tools.server.ModAchievements;
 
 public class CustomAchievements {
-    public static AchievementTemplate pumpkinKiller, treeKiller, gravestoneLooter;
+    public static AchievementTemplate pumpkinKiller, treeKiller, gravestoneLooter, spiderKiller;
 
     public static void register() {
         pumpkinKiller = ModAchievements.build(ModConfig.pumpkinKillerAchId)
@@ -22,6 +22,12 @@ public class CustomAchievements {
         treeKiller = ModAchievements.build(ModConfig.treeKillerAchId)
                 .name("What a releaf")
                 .description("You chopped down an evil tree")
+                .achievementType(MiscConstants.A_TYPE_SILVER)
+                .buildAndRegister();
+
+        spiderKiller = ModAchievements.build(ModConfig.spiderKillerAchId)
+                .name("8 legs too many")
+                .description("You rid the world of a Jack O Spider")
                 .achievementType(MiscConstants.A_TYPE_SILVER)
                 .buildAndRegister();
 

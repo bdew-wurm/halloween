@@ -140,6 +140,8 @@ public class GuardianCreatureAI extends CreatureAI {
             killers.forEach(p -> CustomAchievements.triggerAchievement(p, CustomAchievements.pumpkinKiller));
         else if (creature.getTemplate().getTemplateId() == CustomCreatures.treeId)
             killers.forEach(p -> CustomAchievements.triggerAchievement(p, CustomAchievements.treeKiller));
+        else if (creature.getTemplate().getTemplateId() == CustomCreatures.spiderId)
+            killers.forEach(p -> CustomAchievements.triggerAchievement(p, CustomAchievements.spiderKiller));
 
         return false;
     }

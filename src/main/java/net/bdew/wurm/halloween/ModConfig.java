@@ -20,6 +20,7 @@ public class ModConfig {
     public static int pumpkinKillerAchId = 4100;
     public static int treeKillerAchId = 4101;
     public static int gravestoneLooterAchId = 4102;
+    public static int spiderKillerAchId = 4103;
 
     public static int pumpkinSmasherTitleId = 5100;
     public static int graveRobberTitleId = 5101;

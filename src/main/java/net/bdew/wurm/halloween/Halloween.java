@@ -58,6 +58,7 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
         ModConfig.pumpkinKillerAchId = Integer.parseInt(properties.getProperty("pumpkinKillerAchId", "4100"));
         ModConfig.treeKillerAchId = Integer.parseInt(properties.getProperty("treeKillerAchId", "4101"));
         ModConfig.gravestoneLooterAchId = Integer.parseInt(properties.getProperty("gravestoneLooterAchId", "4102"));
+        ModConfig.spiderKillerAchId = Integer.parseInt(properties.getProperty("spiderKillerAchId", "4103"));
         ModConfig.pumpkinSmasherTitleId = Integer.parseInt(properties.getProperty("pumpkinSmasherTitleId", "5100"));
         ModConfig.graveRobberTitleId = Integer.parseInt(properties.getProperty("graveRobberTitleId", "5101"));
 
