@@ -1,7 +1,10 @@
-model.creature.eviltree          = ominoustree/main.wom
-model.creature.pumpkinmonster    = scarypumpkin/main.wom
+model.creature.eviltree            = ~graphics.jar/creatures/scarytree/main.wom
+model.creature.pumpkinmonster      = ~graphics.jar/creatures/pumpkincreature/main.wom
+model.creature.jackospider     	   = ~graphics.jar/creatures/huge_spider/Jack_O_spider.wom
+model.corpse.jackospider           = ~graphics.jar/creatures/huge_spider/Jack_O_spider_corpse.wom
+model.corpse.jackospider.butchered = ~graphics.jar/creatures/butcherdgeneric/butcheredGeneric1.wom
 
-model.armour.head.pumpkin        = head/pumpkinHead.wom
+model.armour.head.pumpkin        = ~graphics.jar/player/helms/pumpkinHead.wom
 armor.xml                        = armor.xml
 
 model.transports.broom           = broom/broom.wom

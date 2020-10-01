@@ -13,6 +13,10 @@ public class ModConfig {
     public static float pumpkinMonsterDamage = 10f;
     public static float pumpkinMonsterArmor = 0.7f;
 
+    public static float jackOSpiderCR = 12f;
+    public static float jackOSpiderDamage = 20f;
+    public static float jackOSpiderArmor = 0.8f;
+
     public static int pumpkinKillerAchId = 4100;
     public static int treeKillerAchId = 4101;
     public static int gravestoneLooterAchId = 4102;

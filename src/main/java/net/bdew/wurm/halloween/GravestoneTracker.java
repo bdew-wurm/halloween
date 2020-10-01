@@ -68,7 +68,26 @@ public class GravestoneTracker {
             addGravestone(gravestone);
             for (int i = 0; i < ModConfig.guardianCount; i++) {
                 try {
-                    Creature spawned = Creature.doNew(Server.rand.nextInt(ModConfig.guardianChamps) == 0 ? CustomCreatures.treeId : CustomCreatures.pumpkinId, Server.rand.nextInt(4) == 0 ? CreatureTypes.C_MOD_CHAMPION : CreatureTypes.C_MOD_NONE, gravestone.getPosX() - 5f + Server.rand.nextFloat() * 10, gravestone.getPosY() - 5f + Server.rand.nextFloat() * 10, Server.rand.nextInt(360), gravestone.isOnSurface() ? 0 : -1, "", (byte) 0);
+                    int tpl;
+                    switch (Server.rand.nextInt(5)) {
+                        case 0:
+                        case 1:
+                            tpl = CustomCreatures.spiderId;
+                            break;
+                        case 2:
+                        case 3:
+                            tpl = CustomCreatures.pumpkinId;
+                            break;
+                        default:
+                            tpl = CustomCreatures.treeId;
+                    }
+                    Creature spawned = Creature.doNew(
+                            tpl,
+                            Server.rand.nextInt(ModConfig.guardianChamps) == 0 ? CreatureTypes.C_MOD_CHAMPION : CreatureTypes.C_MOD_NONE,
+                            gravestone.getPosX() - 5f + Server.rand.nextFloat() * 10,
+                            gravestone.getPosY() - 5f + Server.rand.nextFloat() * 10,
+                            Server.rand.nextInt(360),
+                            gravestone.isOnSurface() ? 0 : -1, "", (byte) 0);
                     GuardianCreatureAIData.get(spawned).guarded = gravestone;
                     addGuard(gravestone, spawned);
                 } catch (Exception e) {

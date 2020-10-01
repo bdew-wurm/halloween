@@ -46,9 +46,14 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
         ModConfig.evilTreeCR = Float.parseFloat(properties.getProperty("evilTreeCR", "14"));
         ModConfig.evilTreeDamage = Float.parseFloat(properties.getProperty("evilTreeDamage", "15"));
         ModConfig.evilTreeArmor = Float.parseFloat(properties.getProperty("evilTreeArmor", "0.6"));
+
         ModConfig.pumpkinMonsterCR = Float.parseFloat(properties.getProperty("pumpkinMonsterCR", "12"));
         ModConfig.pumpkinMonsterDamage = Float.parseFloat(properties.getProperty("pumpkinMonsterDamage", "10"));
         ModConfig.pumpkinMonsterArmor = Float.parseFloat(properties.getProperty("pumpkinMonsterArmor", "0.7"));
+
+        ModConfig.jackOSpiderCR = Float.parseFloat(properties.getProperty("jackOSpiderCR", "12"));
+        ModConfig.jackOSpiderDamage = Float.parseFloat(properties.getProperty("jackOSpiderDamage", "20"));
+        ModConfig.jackOSpiderArmor = Float.parseFloat(properties.getProperty("jackOSpiderArmor", "0.8"));
 
         ModConfig.pumpkinKillerAchId = Integer.parseInt(properties.getProperty("pumpkinKillerAchId", "4100"));
         ModConfig.treeKillerAchId = Integer.parseInt(properties.getProperty("treeKillerAchId", "4101"));
@@ -115,6 +120,7 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
                 DbFix.fixMaskMaterial();
             CustomCreatures.createEvilTreeTemplate();
             CustomCreatures.createPumpkinMonsterTemplate();
+            CustomCreatures.createJackOSpiderTemplate();
             Broom.register();
         } catch (NoSuchFieldException | IllegalAccessException | IOException | SQLException e) {
             throw new RuntimeException(e);
