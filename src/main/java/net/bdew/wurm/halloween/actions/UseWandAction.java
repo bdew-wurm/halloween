@@ -11,110 +11,14 @@ import com.wurmonline.server.spells.SpellEffect;
 import com.wurmonline.server.zones.VolaTile;
 import com.wurmonline.server.zones.Zones;
 import net.bdew.wurm.halloween.CustomItems;
+import net.bdew.wurm.halloween.RandomUtils;
 import org.gotti.wurmunlimited.modsupport.actions.*;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class UseWandAction implements ModAction, ActionPerformer, BehaviourProvider {
     private ActionEntry actionEntry;
-
-    private List<String> models = Arrays.asList(
-            "model.creature.deathcrawler",
-            "model.creature.dragon.black",
-            "model.creature.dragon.blue",
-            "model.creature.dragon.green",
-            "model.creature.dragon.red",
-            "model.creature.dragon.white",
-            "model.creature.drake.black",
-            "model.creature.drake.blue",
-            "model.creature.drake.green",
-            "model.creature.drake.red",
-            "model.creature.drake.spirit",
-            "model.creature.drake.white",
-            "model.creature.eagle.spirit",
-            "model.creature.eviltree",
-            "model.creature.fish.blue.whale",
-            "model.creature.fish.dolphin",
-            "model.creature.fish.octopus",
-            "model.creature.fish.seal",
-            "model.creature.fish.seal.cub",
-            "model.creature.fish.shark.huge",
-            "model.creature.humanoid.avenger.light",
-            "model.creature.humanoid.chicken",
-            "model.creature.humanoid.demon.sol",
-            "model.creature.humanoid.giant.epiphany",
-            "model.creature.humanoid.giant.forest",
-            "model.creature.humanoid.giant.incarnation",
-            "model.creature.humanoid.giant.juggernaut",
-            "model.creature.humanoid.giant.manifestation",
-            "model.creature.humanoid.goblin.leader",
-            "model.creature.humanoid.goblin.standard",
-            "model.creature.humanoid.gorilla.mountain",
-            "model.creature.humanoid.hen",
-            "model.creature.humanoid.human.bartender",
-            "model.creature.humanoid.human.evilsanta",
-            "model.creature.humanoid.human.guard.tower",
-            "model.creature.humanoid.human.salesman",
-            "model.creature.humanoid.human.santa",
-            "model.creature.humanoid.human.skeleton",
-            "model.creature.humanoid.human.spirit.wraith",
-            "model.creature.humanoid.jackal.rift",
-            "model.creature.humanoid.jackal.rift.caster",
-            "model.creature.humanoid.jackal.rift.summoner",
-            "model.creature.humanoid.kyklops",
-            "model.creature.humanoid.lavacreature",
-            "model.creature.humanoid.nogump.son",
-            "model.creature.humanoid.ogre.rift",
-            "model.creature.humanoid.ogre.rift.mage",
-            "model.creature.humanoid.pheasant",
-            "model.creature.humanoid.rooster",
-            "model.creature.humanoid.troll.king",
-            "model.creature.humanoid.troll.standard",
-            "model.creature.humanoid.warmaster.rift",
-            "model.creature.multiped.scorpion",
-            "model.creature.multiped.scorpion.hell",
-            "model.creature.multiped.spider.fog",
-            "model.creature.multiped.spider.huge",
-            "model.creature.multiped.spider.lava",
-            "model.creature.pumpkinmonster",
-            "model.creature.quadraped.bear.black",
-            "model.creature.quadraped.bear.brown",
-            "model.creature.quadraped.beast.rift",
-            "model.creature.quadraped.bison",
-            "model.creature.quadraped.boar.wild",
-            "model.creature.quadraped.bull",
-            "model.creature.quadraped.calf",
-            "model.creature.quadraped.cat.wild",
-            "model.creature.quadraped.cow",
-            "model.creature.quadraped.crab",
-            "model.creature.quadraped.crocodile",
-            "model.creature.quadraped.deer",
-            "model.creature.quadraped.dog",
-            "model.creature.quadraped.dog.hell",
-            "model.creature.quadraped.easterbunny",
-            "model.creature.quadraped.foal",
-            "model.creature.quadraped.horse",
-            "model.creature.quadraped.horse.hell",
-            "model.creature.quadraped.horse.hell.foal",
-            "model.creature.quadraped.hyena.rabid",
-            "model.creature.quadraped.insect.cavebug",
-            "model.creature.quadraped.lamb",
-            "model.creature.quadraped.lion.mountain",
-            "model.creature.quadraped.pig",
-            "model.creature.quadraped.rat.large",
-            "model.creature.quadraped.sheep",
-            "model.creature.quadraped.tortoise",
-            "model.creature.quadraped.unicorn",
-            "model.creature.quadraped.unicorn.foal",
-            "model.creature.quadraped.wolf.black",
-            "model.creature.quadraped.wolf.worg",
-            "model.creature.snake.anaconda",
-            "model.creature.snake.kingcobra",
-            "model.creature.snake.serpent.sea",
-            "model.creature.spawn.uttacha"
-    );
 
     public UseWandAction() {
         actionEntry = new ActionEntryBuilder((short) ModActions.getNextActionId(), "Use wand", "waving wand", new int[]{
@@ -184,7 +88,7 @@ public class UseWandAction implements ModAction, ActionPerformer, BehaviourProvi
                 performer.getCommunicator().sendNormalServerMessage(String.format("%s jumps is surprise as your spell is completed!", target.getName()));
                 Server.getInstance().broadCastAction(String.format("%s suddenly looks different.", target.getName()), performer, target, 5);
 
-                target.setModelName(models.get(Server.rand.nextInt(models.size())));
+                target.setModelName(RandomUtils.randomIllusionModel());
 
                 VolaTile tile = target.getCurrentTile();
                 if (tile != null) {

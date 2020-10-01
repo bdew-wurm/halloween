@@ -5,6 +5,7 @@ import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.NotFoundException;
+import net.bdew.wurm.halloween.actions.InvestigateGravestoneAction;
 import net.bdew.wurm.halloween.actions.UseWandAction;
 import net.bdew.wurm.halloween.titles.CustomAchievements;
 import net.bdew.wurm.halloween.titles.CustomTitles;
@@ -66,6 +67,7 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
         ModConfig.updateMaskMaterials = Boolean.parseBoolean(properties.getProperty("updateMaskMaterials", "true"));
 
         ModConfig.craftableMagicCandle = Boolean.parseBoolean(properties.getProperty("craftableMagicCandle", "true"));
+        ModConfig.lootableBrooms = Boolean.parseBoolean(properties.getProperty("lootableBrooms", "true"));
     }
 
     @Override

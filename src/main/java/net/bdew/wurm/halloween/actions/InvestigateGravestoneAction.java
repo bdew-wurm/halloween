@@ -1,4 +1,4 @@
-package net.bdew.wurm.halloween;
+package net.bdew.wurm.halloween.actions;
 
 import com.wurmonline.mesh.GrassData;
 import com.wurmonline.mesh.Tiles;
@@ -18,6 +18,7 @@ import com.wurmonline.server.zones.VolaTile;
 import com.wurmonline.server.zones.Zones;
 import com.wurmonline.shared.constants.CreatureTypes;
 import com.wurmonline.shared.constants.ItemMaterials;
+import net.bdew.wurm.halloween.*;
 import net.bdew.wurm.halloween.titles.CustomAchievements;
 import org.gotti.wurmunlimited.modsupport.actions.*;
 
@@ -168,48 +169,9 @@ public class InvestigateGravestoneAction implements ModAction, ActionPerformer, 
             }
             SpellEffect eff = new SpellEffect(performer.getWurmId(), (byte) 72, 100.0f, (int) (2000.0f * Server.rand.nextFloat()), (byte) 9, (byte) 0, true);
             effs.addSpellEffect(eff);
-            CreatureTemplateFactory ctf = CreatureTemplateFactory.getInstance();
-            ItemTemplateFactory itf = ItemTemplateFactory.getInstance();
-            switch (Server.rand.nextInt(12)) {
-                case 0:
-                    performer.setModelName("model.creature.humanoid.human.player.zombie");
-                    break;
-                case 1:
-                    performer.setModelName(ctf.getTemplate(CreatureTemplateIds.SKELETON_CID).getModelName());
-                    break;
-                case 2:
-                    performer.setModelName(ctf.getTemplate(CreatureTemplateIds.WRAITH_CID).getModelName());
-                    break;
-                case 3:
-                    performer.setModelName(ctf.getTemplate(CreatureTemplateIds.TROLL_CID).getModelName());
-                    break;
-                case 4:
-                    performer.setModelName(ctf.getTemplate(CreatureTemplateIds.CHICKEN_CID).getModelName());
-                    break;
-                case 5:
-                    performer.setModelName(ctf.getTemplate(CreatureTemplateIds.DRAGON_RED_CID).getModelName());
-                    break;
-                case 6:
-                    performer.setModelName(ctf.getTemplate(CreatureTemplateIds.SEA_SERPENT_CID).getModelName());
-                    break;
-                case 7:
-                    performer.setModelName(ctf.getTemplate(CreatureTemplateIds.INCARNATION_LIBILA_CID).getModelName());
-                    break;
-                case 8:
-                    performer.setModelName(ctf.getTemplate(CreatureTemplateIds.AVENGER_OF_LIGHT_CID).getModelName());
-                    break;
-                case 9:
-                    performer.setModelName(itf.getTemplate(ItemList.cake).getModelName());
-                    break;
-                case 10:
-                    performer.setModelName(itf.getTemplate(ItemList.barrelLarge).getModelName());
-                    break;
-                case 11:
-                    performer.setModelName(itf.getTemplate(ItemList.crateLarge).getModelName());
-                    break;
-            }
+            performer.setModelName(RandomUtils.randomIllusionModel());
         } else if (roll < 45) {
-            Item hat = ItemFactory.createItem(CustomItems.hatId, 90f + Server.rand.nextFloat() * 10f, ItemMaterials.MATERIAL_COTTON, makeRarity(10, false), null);
+            Item hat = ItemFactory.createItem(CustomItems.hatId, 90f + Server.rand.nextFloat() * 10f, ItemMaterials.MATERIAL_COTTON, RandomUtils.randomRarity(10, false), null);
             performer.getInventory().insertItem(hat);
             comm.sendNormalServerMessage("You find a funny looking hat!");
         } else if (roll < 50) {
@@ -221,39 +183,43 @@ public class InvestigateGravestoneAction implements ModAction, ActionPerformer, 
                 material = Materials.MATERIAL_SILVER;
             else if (roll2 >= 6)
                 material = Materials.MATERIAL_WOOD_OLEANDER;
-            Item mask = ItemFactory.createItem(CustomItems.maskId, 90f + Server.rand.nextFloat() * 10f, material, makeRarity(10, false), null);
+            Item mask = ItemFactory.createItem(CustomItems.maskId, 90f + Server.rand.nextFloat() * 10f, material, RandomUtils.randomRarity(10, false), null);
             performer.getInventory().insertItem(mask);
             comm.sendNormalServerMessage("You find a creepy skull that someone fashioned into a mask!.. Is it human?!?");
+        } else if (roll < 55 && ModConfig.lootableBrooms) {
+            Item broom = ItemFactory.createItem(Broom.broomId, 99f, RandomUtils.randomWoodMaterial(), RandomUtils.randomRarity(20, false), null);
+            performer.getInventory().insertItem(broom);
+            comm.sendNormalServerMessage("You find an enchanted broom!");
         } else if (roll < 60) {
-            Item gem = ItemFactory.createItem(randomGem(true), 90f + Server.rand.nextFloat() * 10f, ItemMaterials.MATERIAL_CRYSTAL, makeRarity(10, false), null);
-            performer.getInventory().insertItem(gem);
-            comm.sendNormalServerMessage(String.format("You find a shiny %s!", gem.getName()));
+            Item wand = ItemFactory.createItem(CustomItems.witchWandId, 50f, RandomUtils.randomWoodMaterial(), RandomUtils.randomRarity(20, false), null);
+            performer.getInventory().insertItem(wand);
+            comm.sendNormalServerMessage("You find a magic wand!");
         } else if (roll < 65) {
-            Item gem = ItemFactory.createItem(randomGem(false), 90f + Server.rand.nextFloat() * 10f, ItemMaterials.MATERIAL_CRYSTAL, makeRarity(10, false), null);
+            Item gem = ItemFactory.createItem(RandomUtils.randomGem(Server.rand.nextInt(4) == 0), 90f + Server.rand.nextFloat() * 10f, ItemMaterials.MATERIAL_CRYSTAL, RandomUtils.randomRarity(10, false), null);
             performer.getInventory().insertItem(gem);
             comm.sendNormalServerMessage(String.format("You find a shiny %s!", gem.getName()));
         } else if (roll < 70) {
-            Item coin = ItemFactory.createItem(randomCoin(8), 90f + Server.rand.nextFloat() * 10f, ItemMaterials.MATERIAL_UNDEFINED, makeRarity(10, false), null);
+            Item coin = ItemFactory.createItem(RandomUtils.randomCoin(8), 90f + Server.rand.nextFloat() * 10f, ItemMaterials.MATERIAL_UNDEFINED, RandomUtils.randomRarity(10, false), null);
             performer.getInventory().insertItem(coin);
             comm.sendNormalServerMessage("You find a shiny coin!");
         } else if (roll < 75) {
-            Item shoulder = ItemFactory.createItem(ItemList.shoulderPumpkinHalloween, 85f + Server.rand.nextFloat() * 10f, ItemMaterials.MATERIAL_LEATHER, makeRarity(30, false), null);
+            Item shoulder = ItemFactory.createItem(ItemList.shoulderPumpkinHalloween, 85f + Server.rand.nextFloat() * 10f, ItemMaterials.MATERIAL_LEATHER, RandomUtils.randomRarity(30, false), null);
             performer.getInventory().insertItem(shoulder);
             comm.sendNormalServerMessage(String.format("You find a %s!", shoulder.getName()));
         } else if (roll < 80) {
-            Item shoulder = ItemFactory.createItem(1063, 85f + Server.rand.nextFloat() * 10f, ItemMaterials.MATERIAL_LEATHER, makeRarity(30, false), null);
+            Item shoulder = ItemFactory.createItem(1063, 85f + Server.rand.nextFloat() * 10f, ItemMaterials.MATERIAL_LEATHER, RandomUtils.randomRarity(30, false), null);
             performer.getInventory().insertItem(shoulder);
             comm.sendNormalServerMessage(String.format("You find a %s!", shoulder.getName()));
         } else if (roll < 85) {
-            Item shoulder = ItemFactory.createItem(1064, 85f + Server.rand.nextFloat() * 10f, ItemMaterials.MATERIAL_LEATHER, makeRarity(30, false), null);
+            Item shoulder = ItemFactory.createItem(1064, 85f + Server.rand.nextFloat() * 10f, ItemMaterials.MATERIAL_LEATHER, RandomUtils.randomRarity(30, false), null);
             performer.getInventory().insertItem(shoulder);
             comm.sendNormalServerMessage(String.format("You find a %s!", shoulder.getName()));
         } else if (roll < 90) {
-            Item mask = ItemFactory.createItem(ItemList.maskTrollHalloween, 85f + Server.rand.nextFloat() * 10f, ItemMaterials.MATERIAL_LEATHER, makeRarity(30, false), null);
+            Item mask = ItemFactory.createItem(ItemList.maskTrollHalloween, 85f + Server.rand.nextFloat() * 10f, ItemMaterials.MATERIAL_LEATHER, RandomUtils.randomRarity(30, false), null);
             performer.getInventory().insertItem(mask);
             comm.sendNormalServerMessage(String.format("You find a %s!", mask.getName()));
         } else if (roll < 93) {
-            Item bone = ItemFactory.createItem(ItemList.boneCollar, 85f + Server.rand.nextFloat() * 10f, ItemMaterials.MATERIAL_UNDEFINED, makeRarity(30, true), null);
+            Item bone = ItemFactory.createItem(ItemList.boneCollar, 85f + Server.rand.nextFloat() * 10f, ItemMaterials.MATERIAL_UNDEFINED, RandomUtils.randomRarity(30, true), null);
             performer.getInventory().insertItem(bone);
             comm.sendNormalServerMessage("You find a strange bone!");
         } else if (roll == 93) {
@@ -288,20 +254,6 @@ public class InvestigateGravestoneAction implements ModAction, ActionPerformer, 
             comm.sendNormalServerMessage(String.format("You find a %s!", item.getName()));
 
         }
-    }
-
-    public static byte makeRarity(int chance, boolean alwaysRare) {
-        byte rarity = 0;
-        if (alwaysRare || Server.rand.nextInt(chance) == 0) {
-            rarity = 1;
-            if (Server.rand.nextInt(chance) == 0) {
-                rarity = 2;
-                if (Server.rand.nextInt(chance) == 0) {
-                    rarity = 3;
-                }
-            }
-        }
-        return rarity;
     }
 
     private void spawnAttackers(Creature performer, int template, int num, boolean reborn) throws
@@ -340,44 +292,6 @@ public class InvestigateGravestoneAction implements ModAction, ActionPerformer, 
             } else {
                 defender.getBody().addWound(new DbWound(type, (byte) pos, (float) damage, defender.getWurmId(), 0.0f, 0.0f, performer != null && performer.isPlayer(), spell));
             }
-        }
-    }
-
-
-    private int randomGem(boolean star) {
-        switch (Server.rand.nextInt(5)) {
-            case 0:
-                if (star) return ItemList.diamondStar;
-                else return ItemList.diamond;
-            case 1:
-                if (star) return ItemList.emeraldStar;
-                else return ItemList.emerald;
-            case 2:
-                if (star) return ItemList.rubyStar;
-                else return ItemList.ruby;
-            case 3:
-                if (star) return ItemList.opalBlack;
-                else return ItemList.opal;
-            case 4:
-            default:
-                if (star) return ItemList.sapphireStar;
-                else return ItemList.sapphire;
-        }
-    }
-
-    private int randomCoin(int level) {
-        switch (Server.rand.nextInt(level)) {
-            case 0:
-            case 1:
-                return ItemList.coinCopperFive;
-            case 2:
-            case 3:
-                return ItemList.coinCopperTwenty;
-            case 4:
-                return ItemList.coinSilver;
-            case 5:
-            default:
-                return ItemList.coinSilverFive;
         }
     }
 

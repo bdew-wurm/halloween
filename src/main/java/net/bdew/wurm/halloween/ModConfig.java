@@ -29,4 +29,6 @@ public class ModConfig {
     public static boolean updateMaskMaterials = true;
 
     public static boolean craftableMagicCandle = true;
+
+    public static boolean lootableBrooms = true;
 }
