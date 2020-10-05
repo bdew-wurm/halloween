@@ -1,7 +1,19 @@
 package net.bdew.wurm.halloween;
 
+import com.wurmonline.server.Items;
+import com.wurmonline.server.NoSuchItemException;
+import com.wurmonline.server.WurmId;
+import com.wurmonline.server.behaviours.Vehicle;
 import com.wurmonline.server.creatures.Communicator;
+import com.wurmonline.server.creatures.Creature;
 import com.wurmonline.server.items.Item;
+import com.wurmonline.server.players.Player;
+import com.wurmonline.server.zones.NoSuchZoneException;
+import com.wurmonline.server.zones.Zones;
+import com.wurmonline.shared.constants.CounterTypes;
+import net.bdew.wurm.tools.server.ServerThreadExecutor;
+
+import java.util.Optional;
 
 public class Hooks {
     public static void addItemLoading(Item item) {
@@ -32,5 +44,65 @@ public class Hooks {
         if (item.getTemplateId() == CustomItems.gravestoneId)
             return 3f;
         return 1f;
+    }
+
+    public static void setVehicle(Creature creature, long prevId, long newId) {
+        if (prevId != -10L && WurmId.getType(prevId) == CounterTypes.COUNTER_TYPE_ITEMS) {
+            Optional<Item> prevItem = Items.getItemOptional(prevId);
+            prevItem.filter(x -> x.getTemplateId() == Broom.broomId).ifPresent(item -> {
+                ServerThreadExecutor.INSTANCE.submit(() -> {
+                    Broom.stopCounting(item.getWurmId(), creature);
+                    try {
+                        Zones.getZone(item.getTilePos(), item.isOnSurface()).removeItem(item);
+                        creature.getInventory().insertItem(item, true, false);
+                    } catch (NoSuchZoneException e) {
+                        Halloween.logException(String.format("Zone not found when dismounting broom %d by %s", item.getWurmId(), creature.getName()), e);
+                    }
+                });
+            });
+        }
+        if (newId != -10L && WurmId.getType(newId) == CounterTypes.COUNTER_TYPE_ITEMS) {
+            Optional<Item> newItem = Items.getItemOptional(newId);
+            newItem.filter(x -> x.getTemplateId() == Broom.broomId).ifPresent(item -> {
+                ServerThreadExecutor.INSTANCE.submit(() -> {
+                    Broom.setEmbarking(item, false);
+                    Broom.startCounting(item.getWurmId(), creature);
+                    creature.getCurrentTile().renameItem(item);
+                });
+            });
+        }
+    }
+
+    public static boolean checkRelaxedZError(Creature creature, float input, float expected) {
+        if (creature.getVehicle() == -10L || WurmId.getType(creature.getVehicle()) != CounterTypes.COUNTER_TYPE_ITEMS)
+            return false;
+
+        try {
+            Item itm = Items.getItem(creature.getVehicle());
+            if (itm.getTemplateId() == Broom.broomId) {
+                if (Math.abs(input - expected) < 0.5f) return true;
+            }
+        } catch (NoSuchItemException e) {
+            return false;
+        }
+        return false;
+    }
+
+    public static byte modifySpeed(Vehicle vehicle, byte speed) {
+        try {
+            Item item = Items.getItem(vehicle.wurmid);
+            if (item.getTemplateId() == Broom.broomId) {
+                float mod = 1 + (item.getSpellSpeedBonus() / 100f * ModConfig.broomSpeedEnchantBonus);
+                speed = (byte) (mod * speed);
+                if (speed < 0) speed = Byte.MAX_VALUE;
+            }
+        } catch (NoSuchItemException ignored) {
+        }
+        return speed;
+    }
+
+    public static void playerMovedTile(Player player) {
+        if (player.getVehicle() != -10L)
+            Broom.countMoveTile(player.getVehicle(), player);
     }
 }

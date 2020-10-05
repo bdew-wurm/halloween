@@ -17,6 +17,11 @@ public class ModConfig {
     public static float jackOSpiderDamage = 20f;
     public static float jackOSpiderArmor = 0.8f;
 
+    public static float broomBaseSpeed = 10f;
+    public static float broomSpeedEnchantBonus = 1f;
+    public static float broomMaxSlope = 250f;
+    public static float broomQlLoss = 0.0001f;
+
     public static int pumpkinKillerAchId = 4100;
     public static int treeKillerAchId = 4101;
     public static int gravestoneLooterAchId = 4102;

@@ -5,8 +5,7 @@ import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.NotFoundException;
-import net.bdew.wurm.halloween.actions.InvestigateGravestoneAction;
-import net.bdew.wurm.halloween.actions.UseWandAction;
+import net.bdew.wurm.halloween.actions.*;
 import net.bdew.wurm.halloween.titles.CustomAchievements;
 import net.bdew.wurm.halloween.titles.CustomTitles;
 import org.gotti.wurmunlimited.modloader.classhooks.HookManager;
@@ -68,6 +67,11 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
 
         ModConfig.craftableMagicCandle = Boolean.parseBoolean(properties.getProperty("craftableMagicCandle", "true"));
         ModConfig.lootableBrooms = Boolean.parseBoolean(properties.getProperty("lootableBrooms", "true"));
+
+        ModConfig.broomBaseSpeed = Float.parseFloat(properties.getProperty("broomBaseSpeed", "10"));
+        ModConfig.broomSpeedEnchantBonus = Float.parseFloat(properties.getProperty("broomSpeedEnchantBonus", "1"));
+        ModConfig.broomMaxSlope = Float.parseFloat(properties.getProperty("broomMaxSlope", "250"));
+        ModConfig.broomQlLoss = Float.parseFloat(properties.getProperty("broomQlLoss", "0.0001"));
     }
 
     @Override
@@ -82,6 +86,10 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
             CtClass ctCommunicator = classPool.getCtClass("com.wurmonline.server.creatures.Communicator");
             CtClass ctItem = classPool.getCtClass("com.wurmonline.server.items.Item");
             CtClass ctZone = classPool.getCtClass("com.wurmonline.server.zones.Zone");
+            CtClass ctCreature = classPool.getCtClass("com.wurmonline.server.creatures.Creature");
+            CtClass ctMovementScheme = classPool.getCtClass("com.wurmonline.server.creatures.MovementScheme");
+            CtClass ctVehicle = classPool.getCtClass("com.wurmonline.server.behaviours.Vehicle");
+            CtClass ctPlayer = classPool.getCtClass("com.wurmonline.server.players.Player");
 
             ctCommunicator.getMethod("sendItem", "(Lcom/wurmonline/server/items/Item;JZ)V")
                     .insertAfter("net.bdew.wurm.halloween.Hooks.sendItemHook(this, $1);");
@@ -94,6 +102,18 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
 
             ctZone.getMethod("addItem", "(Lcom/wurmonline/server/items/Item;ZZZ)V")
                     .insertAfter("if ($4) net.bdew.wurm.halloween.Hooks.addItemLoading($1);");
+
+            ctCreature.getMethod("setVehicle", "(JZBII)V")
+                    .insertBefore("net.bdew.wurm.halloween.Hooks.setVehicle(this, this.vehicle, $1);");
+
+            ctMovementScheme.getMethod("handleZError", "(FF)Z")
+                    .insertBefore("if (net.bdew.wurm.halloween.Hooks.checkRelaxedZError(this.creature, $1, $2)) return false;");
+
+            ctVehicle.getMethod("calculateNewVehicleSpeed", "(Z)B")
+                    .insertAfter("$_ = net.bdew.wurm.halloween.Hooks.modifySpeed(this, $_);");
+
+            ctPlayer.getMethod("addTileMoved", "()V")
+                    .insertAfter("net.bdew.wurm.halloween.Hooks.playerMovedTile(this);");
 
             CustomTitles.register();
 
@@ -135,6 +155,9 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
         GravestoneTracker.started();
         ModActions.registerAction(new InvestigateGravestoneAction());
         ModActions.registerAction(new UseWandAction());
+        ModActions.registerBehaviourProvider(new BroomBehaviour());
+        ModActions.registerActionPerformer(new MountBroomPerformer());
+        ModActions.registerActionPerformer(new DismountBroomPerformer());
     }
 
     @Override
