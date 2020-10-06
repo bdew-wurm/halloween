@@ -139,6 +139,7 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
             CustomItems.registerCauldron();
             CustomItems.registerWand();
             CustomItems.registerCoffin();
+            CustomItems.registerWings();
             if (ModConfig.updateMaskMaterials)
                 DbFix.fixMaskMaterial();
             CustomCreatures.createEvilTreeTemplate();

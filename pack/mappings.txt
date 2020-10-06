@@ -19,3 +19,5 @@ model.tool.cauldron.witch.creepy = cauldron/creepy.wom
 model.wand.witch                 = wand/wand.wom
 
 model.furniture.coffin.wood      = coffin/coffin.wom
+
+model.armour.wings.bat           = wings/wings.wom

@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class CustomItems {
     public static int gravestoneId, hatId, maskId, pumpkinHelmId, candleId, candleInfId;
-    public static int cauldronEmptyId, cauldronStewId, cauldronCreepyId, witchWandId, coffinId;
+    public static int cauldronEmptyId, cauldronStewId, cauldronCreepyId, witchWandId, coffinId, wingsId;
 
     static void registerGravestone() throws IOException {
         ItemTemplate temp = new ItemTemplateBuilder("bdew.halloween.gravestone")
@@ -305,5 +305,27 @@ public class CustomItems {
                 .addRequirement(new CreationRequirement(2, ItemList.skullGoblin, 4, true))
                 .addRequirement(new CreationRequirement(3, ItemList.plank, 20, true))
                 .addRequirement(new CreationRequirement(4, ItemList.silverBar, 5, true));
+    }
+
+    static void registerWings() throws IOException {
+        ItemTemplate temp = new ItemTemplateBuilder("bdew.halloween.wings")
+                .name("bat wings", "bat wings", "A set of decorative wings made to resemble a bat.")
+                .imageNumber((short) IconConstants.ICON_LEATHER_SKIN)
+                .modelName("model.armour.wings.bat.")
+                .weightGrams(1000)
+                .dimensions(5, 5, 5)
+                .decayTime(TimeConstants.DECAYTIME_LEATHER)
+                .behaviourType((short) 1)
+                .bodySpaces(new byte[]{BodyTemplate.backSlot})
+                .material(Materials.MATERIAL_LEATHER)
+                .itemTypes(new short[]{
+                        ItemTypes.ITEM_TYPE_LEATHER,
+                        ItemTypes.ITEM_TYPE_DECORATION,
+                        ItemTypes.ITEM_TYPE_REPAIRABLE,
+                        ItemTypes.ITEM_TYPE_NOT_MISSION
+                })
+                .build();
+
+        wingsId = temp.getTemplateId();
     }
 }
