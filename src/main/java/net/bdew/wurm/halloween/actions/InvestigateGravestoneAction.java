@@ -133,7 +133,7 @@ public class InvestigateGravestoneAction implements ModAction, ActionPerformer, 
     }
 
     private void doLoot(Creature performer, Communicator comm, Item gravestone) throws NoSuchTemplateException, FailedException, NoSuchCreatureTemplateException {
-        int roll = Server.rand.nextInt(100);
+        int roll = 39;//Server.rand.nextInt(100);
         if (roll < 10) {
             comm.sendAlertServerMessage(String.format("Run away little %s!", performer.getSex() == 0 ? "boy" : "girl"), (byte) 1);
             if (WurmCalendar.isNight())
@@ -152,6 +152,7 @@ public class InvestigateGravestoneAction implements ModAction, ActionPerformer, 
                 if (vz.getWatcher().isPlayer() && vz.getWatcher().hasLink())
                     vz.getWatcher().getCommunicator().sendAddEffect(gravestone.getWurmId() + 2, performer.getWurmId(), (short) 27, performer.getPosX(), performer.getPosY(), performer.getPositionZ(), (byte) 0, "lightningBolt1", 5f, 0f);
             }
+            performer.achievement(ModConfig.journalLightningAchId);
         } else if (roll < 30) {
             comm.sendAlertServerMessage("Is a trap!", (byte) 1);
             Methods.sendSound(performer, "sound.magicTurret.attack");
@@ -161,6 +162,25 @@ public class InvestigateGravestoneAction implements ModAction, ActionPerformer, 
                     vz.getWatcher().getCommunicator().sendAddEffect(gravestone.getWurmId() + 2, gravestone.getWurmId(), (short) 27, gravestone.getPosX(), gravestone.getPosY(), gravestone.getPosZ(), (byte) 0, "karmaFireball", 10f, 0f);
             }
             addMagicDamage(null, performer, 2, 10000, Wound.TYPE_BURN, false);
+        } else if (roll < 35) {
+            comm.sendAlertServerMessage("*POOF*", (byte) 1);
+            performer.playPersonalSound("sound.emote.chuckle.female");
+
+            int x, y;
+            VolaTile vt;
+
+            do {
+                x = Server.rand.nextInt(Zones.worldTileSizeX - 100) + 50;
+                y = Server.rand.nextInt(Zones.worldTileSizeY - 100) + 50;
+                vt = Zones.getOrCreateTile(x, y, true);
+            } while (vt.getVillage() != null || vt.getStructure() != null);
+
+            performer.setTeleportPoints(x * 4 + 2, y * 4 + 2, 0, 0);
+            if (performer.startTeleporting()) {
+                performer.getCommunicator().sendTeleport(false);
+            }
+
+            performer.achievement(ModConfig.journalTeleportAchId);
         } else if (roll < 40) {
             comm.sendAlertServerMessage("OoooOOoooOoooOoooo!", (byte) 1);
             SpellEffects effs = performer.getSpellEffects();
@@ -170,6 +190,7 @@ public class InvestigateGravestoneAction implements ModAction, ActionPerformer, 
             SpellEffect eff = new SpellEffect(performer.getWurmId(), (byte) 72, 100.0f, (int) (2000.0f * Server.rand.nextFloat()), (byte) 9, (byte) 0, true);
             effs.addSpellEffect(eff);
             performer.setModelName(RandomUtils.randomIllusionModel());
+            performer.achievement(ModConfig.journalTransformAchId);
         } else if (roll < 45) {
             Item hat = ItemFactory.createItem(CustomItems.hatId, 90f + Server.rand.nextFloat() * 10f, ItemMaterials.MATERIAL_COTTON, RandomUtils.randomRarity(10, false), null);
             performer.getInventory().insertItem(hat);
@@ -207,11 +228,11 @@ public class InvestigateGravestoneAction implements ModAction, ActionPerformer, 
             performer.getInventory().insertItem(shoulder);
             comm.sendNormalServerMessage(String.format("You find a %s!", shoulder.getName()));
         } else if (roll < 80) {
-            Item shoulder = ItemFactory.createItem(1063, 85f + Server.rand.nextFloat() * 10f, ItemMaterials.MATERIAL_LEATHER, RandomUtils.randomRarity(30, false), null);
+            Item shoulder = ItemFactory.createItem(CustomItems.skullShoulders, 85f + Server.rand.nextFloat() * 10f, ItemMaterials.MATERIAL_LEATHER, RandomUtils.randomRarity(30, false), null);
             performer.getInventory().insertItem(shoulder);
             comm.sendNormalServerMessage(String.format("You find a %s!", shoulder.getName()));
         } else if (roll < 85) {
-            Item shoulder = ItemFactory.createItem(1064, 85f + Server.rand.nextFloat() * 10f, ItemMaterials.MATERIAL_LEATHER, RandomUtils.randomRarity(30, false), null);
+            Item shoulder = ItemFactory.createItem(CustomItems.humanShoulders, 85f + Server.rand.nextFloat() * 10f, ItemMaterials.MATERIAL_LEATHER, RandomUtils.randomRarity(30, false), null);
             performer.getInventory().insertItem(shoulder);
             comm.sendNormalServerMessage(String.format("You find a %s!", shoulder.getName()));
         } else if (roll < 90) {

@@ -7,6 +7,7 @@ import javassist.CtClass;
 import javassist.NotFoundException;
 import net.bdew.wurm.halloween.actions.*;
 import net.bdew.wurm.halloween.titles.CustomAchievements;
+import net.bdew.wurm.halloween.titles.CustomJournal;
 import net.bdew.wurm.halloween.titles.CustomTitles;
 import org.gotti.wurmunlimited.modloader.classhooks.HookManager;
 import org.gotti.wurmunlimited.modloader.interfaces.*;
@@ -59,8 +60,25 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
         ModConfig.treeKillerAchId = Integer.parseInt(properties.getProperty("treeKillerAchId", "4101"));
         ModConfig.gravestoneLooterAchId = Integer.parseInt(properties.getProperty("gravestoneLooterAchId", "4102"));
         ModConfig.spiderKillerAchId = Integer.parseInt(properties.getProperty("spiderKillerAchId", "4103"));
+        ModConfig.broomRideHiddenAchId = Integer.parseInt(properties.getProperty("broomRideHiddenAchId", "4104"));
+
+
+        ModConfig.customJournalId = Integer.parseInt(properties.getProperty("customJournalId", "40"));
+
+        ModConfig.journalKillPumpkinsAchId = Integer.parseInt(properties.getProperty("journalKillPumpkinsAchId", "4110"));
+        ModConfig.journalKillTreesAchId = Integer.parseInt(properties.getProperty("journalKillTreesAchId", "4111"));
+        ModConfig.journalKillSpidersAchId = Integer.parseInt(properties.getProperty("journalKillSpidersAchId", "4112"));
+        ModConfig.journalLootGravestonesAchId = Integer.parseInt(properties.getProperty("journalLootGravestonesAchId", "4113"));
+        ModConfig.journalBroomRideAchId = Integer.parseInt(properties.getProperty("journalBroomRideAchId", "4114"));
+        ModConfig.journalUseWandAchId = Integer.parseInt(properties.getProperty("journalUseWandAchId", "4115"));
+        ModConfig.journalEquipItemsAchId = Integer.parseInt(properties.getProperty("journalEquipItemsAchId", "4116"));
+        ModConfig.journalTeleportAchId = Integer.parseInt(properties.getProperty("journalTeleportAchId", "4117"));
+        ModConfig.journalLightningAchId = Integer.parseInt(properties.getProperty("journalLightningAchId", "4118"));
+        ModConfig.journalTransformAchId = Integer.parseInt(properties.getProperty("journalTransformAchId", "4119"));
+
         ModConfig.pumpkinSmasherTitleId = Integer.parseInt(properties.getProperty("pumpkinSmasherTitleId", "5100"));
         ModConfig.graveRobberTitleId = Integer.parseInt(properties.getProperty("graveRobberTitleId", "5101"));
+        ModConfig.hollowTitleId = Integer.parseInt(properties.getProperty("hollowTitleId", "5102"));
 
         ModConfig.craftablePumpkinHelm = Boolean.parseBoolean(properties.getProperty("craftablePumpkinHelm", "true"));
         ModConfig.updateMaskMaterials = Boolean.parseBoolean(properties.getProperty("updateMaskMaterials", "true"));
@@ -115,6 +133,9 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
             ctPlayer.getMethod("addTileMoved", "()V")
                     .insertAfter("net.bdew.wurm.halloween.Hooks.playerMovedTile(this);");
 
+            ctItem.getMethod("sendWear", "(Lcom/wurmonline/server/items/Item;B)V")
+                    .insertAfter("if (!item.isBodyPartAttached()) net.bdew.wurm.halloween.Hooks.sendWearHook(item, this.getOwnerOrNull());");
+
             CustomTitles.register();
 
         } catch (CannotCompileException | NotFoundException e) {
@@ -130,7 +151,6 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
     @Override
     public void onItemTemplatesCreated() {
         try {
-            CustomAchievements.register();
             CustomItems.registerGravestone();
             CustomItems.registerHat();
             CustomItems.registerMask();
@@ -146,6 +166,8 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
             CustomCreatures.createPumpkinMonsterTemplate();
             CustomCreatures.createJackOSpiderTemplate();
             Broom.register();
+            CustomAchievements.register();
+            CustomJournal.register();
         } catch (NoSuchFieldException | IllegalAccessException | IOException | SQLException e) {
             throw new RuntimeException(e);
         }

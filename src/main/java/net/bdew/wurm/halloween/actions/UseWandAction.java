@@ -11,6 +11,7 @@ import com.wurmonline.server.spells.SpellEffect;
 import com.wurmonline.server.zones.VolaTile;
 import com.wurmonline.server.zones.Zones;
 import net.bdew.wurm.halloween.CustomItems;
+import net.bdew.wurm.halloween.ModConfig;
 import net.bdew.wurm.halloween.RandomUtils;
 import org.gotti.wurmunlimited.modsupport.actions.*;
 
@@ -71,7 +72,7 @@ public class UseWandAction implements ModAction, ActionPerformer, BehaviourProvi
             }
             SpellEffect eff = effs.getSpellEffect((byte) 72);
             if (eff == null) {
-                target.getCommunicator().sendNormalServerMessage("You change appearance!");
+                target.getCommunicator().sendNormalServerMessage("You feel a change coming over you!");
                 Server.getInstance().broadCastAction(target.getName() + " drinks a yellow potion.", target, 5);
 
                 if (source.getQualityLevel() > 1) {
@@ -89,6 +90,9 @@ public class UseWandAction implements ModAction, ActionPerformer, BehaviourProvi
                 Server.getInstance().broadCastAction(String.format("%s suddenly looks different.", target.getName()), performer, target, 5);
 
                 target.setModelName(RandomUtils.randomIllusionModel());
+
+                performer.achievement(ModConfig.journalUseWandAchId);
+                target.achievement(ModConfig.journalTransformAchId);
 
                 VolaTile tile = target.getCurrentTile();
                 if (tile != null) {

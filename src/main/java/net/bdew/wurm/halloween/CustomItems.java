@@ -8,12 +8,15 @@ import com.wurmonline.server.skills.SkillList;
 import com.wurmonline.shared.constants.IconConstants;
 import com.wurmonline.shared.constants.ItemMaterials;
 import org.gotti.wurmunlimited.modsupport.ItemTemplateBuilder;
+import org.gotti.wurmunlimited.modsupport.items.ModItems;
+import org.gotti.wurmunlimited.modsupport.items.ModelNameProvider;
 
 import java.io.IOException;
 
 public class CustomItems {
     public static int gravestoneId, hatId, maskId, pumpkinHelmId, candleId, candleInfId;
     public static int cauldronEmptyId, cauldronStewId, cauldronCreepyId, witchWandId, coffinId, wingsId;
+    public static int skullShoulders = 1063, humanShoulders = 1064;
 
     static void registerGravestone() throws IOException {
         ItemTemplate temp = new ItemTemplateBuilder("bdew.halloween.gravestone")
@@ -327,5 +330,15 @@ public class CustomItems {
                 .build();
 
         wingsId = temp.getTemplateId();
+
+        ModItems.addModelNameProvider(wingsId, new ModelNameProvider() {
+            @Override
+            public String getModelName(Item item) {
+                if (item.getOwnerId() == -10L)
+                    return item.getTemplate().getModelName() + "ground.";
+                else
+                    return item.getTemplate().getModelName();
+            }
+        });
     }
 }

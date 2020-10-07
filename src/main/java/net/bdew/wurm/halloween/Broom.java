@@ -129,5 +129,8 @@ public class Broom {
                 }
             });
         }
+        if (driver.isPlayer()) {
+            driver.achievement(ModConfig.broomRideHiddenAchId, tiles);
+        }
     }
 }

@@ -7,5 +7,6 @@ public class CustomTitles {
     public static void register() {
         ModTitles.addTitle(ModConfig.pumpkinSmasherTitleId, "Pumpkin Smasher", "Pumpkin Smasher", -1, "NORMAL");
         ModTitles.addTitle(ModConfig.graveRobberTitleId, "Grave Robber", "Grave Robber", -1, "NORMAL");
+        ModTitles.addTitle(ModConfig.hollowTitleId, "Hollow", "Hollow", -1, "NORMAL");
     }
 }

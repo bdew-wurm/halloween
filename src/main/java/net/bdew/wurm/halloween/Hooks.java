@@ -4,15 +4,20 @@ import com.wurmonline.server.Items;
 import com.wurmonline.server.NoSuchItemException;
 import com.wurmonline.server.WurmId;
 import com.wurmonline.server.behaviours.Vehicle;
+import com.wurmonline.server.bodys.BodyHuman;
 import com.wurmonline.server.creatures.Communicator;
 import com.wurmonline.server.creatures.Creature;
 import com.wurmonline.server.items.Item;
+import com.wurmonline.server.items.ItemList;
+import com.wurmonline.server.items.NoSpaceException;
 import com.wurmonline.server.players.Player;
 import com.wurmonline.server.zones.NoSuchZoneException;
 import com.wurmonline.server.zones.Zones;
 import com.wurmonline.shared.constants.CounterTypes;
+import net.bdew.wurm.halloween.titles.CustomAchievements;
 import net.bdew.wurm.tools.server.ServerThreadExecutor;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 public class Hooks {
@@ -104,5 +109,31 @@ public class Hooks {
     public static void playerMovedTile(Player player) {
         if (player.getVehicle() != -10L)
             Broom.countMoveTile(player.getVehicle(), player);
+    }
+
+    private static boolean itemMatches(Item item, int... templateIds) {
+        return Arrays.stream(templateIds).anyMatch(tpl -> item.getTemplateId() == tpl);
+    }
+
+    private static boolean isItemInSlot(Creature creature, byte slot, int... templateIds) {
+        try {
+            return creature.getBody().getBodyPart(slot).getItems().stream().anyMatch(item -> itemMatches(item, templateIds));
+        } catch (NoSpaceException e) {
+            return false;
+        }
+    }
+
+    public static void sendWearHook(Item item, Creature creature) {
+        if (itemMatches(item, CustomItems.maskId, ItemList.maskTrollHalloween, ItemList.shoulderPumpkinHalloween, CustomItems.skullShoulders, CustomItems.humanShoulders, CustomItems.hatId)) {
+            ServerThreadExecutor.INSTANCE.execute(() -> {
+                if (creature != null && creature.isPlayer()) {
+                    if (isItemInSlot(creature, BodyHuman.face, CustomItems.maskId, ItemList.maskTrollHalloween)
+                            && isItemInSlot(creature, BodyHuman.rShoulderSlot, ItemList.shoulderPumpkinHalloween, CustomItems.skullShoulders, CustomItems.humanShoulders)
+                            && isItemInSlot(creature, BodyHuman.lShoulderSlot, ItemList.shoulderPumpkinHalloween, CustomItems.skullShoulders, CustomItems.humanShoulders)
+                            && isItemInSlot(creature, BodyHuman.head, CustomItems.hatId))
+                        CustomAchievements.triggerAchievement(creature, CustomAchievements.journalEquipItems);
+                }
+            });
+        }
     }
 }
