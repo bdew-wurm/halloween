@@ -22,3 +22,11 @@ model.furniture.coffin.wood      = coffin/coffin.wom
 
 model.armour.wings.bat           = wings/wings.wom
 model.armour.wings.bat.ground    = wings/ground.wom
+
+model.light.lamp.street.pumpkin      = lamps/pumpkin.wom
+model.light.lamp.street.pole.pumpkin = lamps/hanging.wom
+model.light.lamp.street.twisted      = lamps/twisted.wom
+
+model.light.lamp.street.pumpkin.lit      = lamps/pumpkin.wom?Pumpkin.emissive=0.35,0.35,0.35,1.0
+model.light.lamp.street.pole.pumpkin.lit = lamps/hanging.wom?Pumpkin.emissive=0.35,0.35,0.35,1.0
+model.light.lamp.street.twisted.lit      = lamps/twisted.wom?Pumpkin.emissive=0.35,0.35,0.35,1.0

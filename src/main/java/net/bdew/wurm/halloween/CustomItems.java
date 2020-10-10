@@ -7,6 +7,7 @@ import com.wurmonline.server.items.*;
 import com.wurmonline.server.skills.SkillList;
 import com.wurmonline.shared.constants.IconConstants;
 import com.wurmonline.shared.constants.ItemMaterials;
+import com.wurmonline.shared.util.MaterialUtilities;
 import org.gotti.wurmunlimited.modsupport.ItemTemplateBuilder;
 import org.gotti.wurmunlimited.modsupport.items.ModItems;
 import org.gotti.wurmunlimited.modsupport.items.ModelNameProvider;
@@ -16,6 +17,7 @@ import java.io.IOException;
 public class CustomItems {
     public static int gravestoneId, hatId, maskId, pumpkinHelmId, candleId, candleInfId;
     public static int cauldronEmptyId, cauldronStewId, cauldronCreepyId, witchWandId, coffinId, wingsId;
+    public static int pumpkinLamp, pumpkinHanging, twistedLamp;
     public static int skullShoulders = 1063, humanShoulders = 1064;
 
     static void registerGravestone() throws IOException {
@@ -340,5 +342,106 @@ public class CustomItems {
                     return item.getTemplate().getModelName();
             }
         });
+    }
+
+    static void regiesterLamps() throws IOException {
+        ItemTemplate pumpkinTpl = new ItemTemplateBuilder("bdew.halloween.lamp.pumpkin")
+                .name("pumpkin lamp", "pumpkin lamps", "A decorative pumpkin lamp on a wooden post.")
+                .imageNumber((short) IconConstants.ICON_DECO_METAL_LAMP)
+                .modelName("model.light.lamp.street.pumpkin.")
+                .weightGrams(5000)
+                .dimensions(2, 20, 200)
+                .decayTime(4838400L)
+                .behaviourType((short) 1)
+                .material(Materials.MATERIAL_IRON)
+                .difficulty(25)
+                .itemTypes(new short[]{
+                        ItemTypes.ITEM_TYPE_NAMED,
+                        ItemTypes.ITEM_TYPE_METAL,
+                        ItemTypes.ITEM_TYPE_STREETLAMP,
+                        ItemTypes.ITEM_TYPE_HASDATA,
+                        ItemTypes.ITEM_TYPE_TURNABLE,
+                        ItemTypes.ITEM_TYPE_DECORATION,
+                        ItemTypes.ITEM_TYPE_OILCONSUMING,
+                        ItemTypes.ITEM_TYPE_REPAIRABLE,
+                        ItemTypes.ITEM_TYPE_DESTROYABLE,
+                        ItemTypes.ITEM_TYPE_LIGHT_BRIGHT,
+                        ItemTypes.ITEM_TYPE_COLORABLE,
+                        ItemTypes.ITEM_TYPE_PLANTABLE
+                })
+                .build();
+        pumpkinTpl.setDyeAmountGrams(100);
+        pumpkinLamp = pumpkinTpl.getTemplateId();
+
+        ItemTemplate hangingTpl = new ItemTemplateBuilder("bdew.halloween.lamp.hanging")
+                .name("hanging pumpkin lamp", "hanging pumpkin lamps", "A decorative pumpkin lamp hanging from a wooden pole.")
+                .imageNumber((short) IconConstants.ICON_DECO_METAL_LAMP)
+                .modelName("model.light.lamp.street.pole.pumpkin.")
+                .weightGrams(5000)
+                .dimensions(2, 20, 200)
+                .decayTime(4838400L)
+                .behaviourType((short) 1)
+                .material(Materials.MATERIAL_IRON)
+                .difficulty(25)
+                .itemTypes(new short[]{
+                        ItemTypes.ITEM_TYPE_NAMED,
+                        ItemTypes.ITEM_TYPE_METAL,
+                        ItemTypes.ITEM_TYPE_STREETLAMP,
+                        ItemTypes.ITEM_TYPE_HASDATA,
+                        ItemTypes.ITEM_TYPE_TURNABLE,
+                        ItemTypes.ITEM_TYPE_DECORATION,
+                        ItemTypes.ITEM_TYPE_OILCONSUMING,
+                        ItemTypes.ITEM_TYPE_REPAIRABLE,
+                        ItemTypes.ITEM_TYPE_DESTROYABLE,
+                        ItemTypes.ITEM_TYPE_LIGHT_BRIGHT,
+                        ItemTypes.ITEM_TYPE_COLORABLE,
+                        ItemTypes.ITEM_TYPE_PLANTABLE
+                })
+                .build();
+        hangingTpl.setDyeAmountGrams(100);
+        pumpkinHanging = hangingTpl.getTemplateId();
+
+        ItemTemplate twistedTpl = new ItemTemplateBuilder("bdew.halloween.lamp.twisted")
+                .name("twisted pumpkin lamp", "twisted pumpkin lamps", "A twisted pumpkin lamp mounted on twisted of rotten wood.")
+                .imageNumber((short) IconConstants.ICON_DECO_METAL_LAMP)
+                .modelName("model.light.lamp.street.twisted.")
+                .weightGrams(5000)
+                .dimensions(2, 20, 200)
+                .decayTime(4838400L)
+                .behaviourType((short) 1)
+                .material(Materials.MATERIAL_WOOD_BIRCH)
+                .difficulty(25)
+                .itemTypes(new short[]{
+                        ItemTypes.ITEM_TYPE_NAMED,
+                        ItemTypes.ITEM_TYPE_WOOD,
+                        ItemTypes.ITEM_TYPE_STREETLAMP,
+                        ItemTypes.ITEM_TYPE_HASDATA,
+                        ItemTypes.ITEM_TYPE_TURNABLE,
+                        ItemTypes.ITEM_TYPE_DECORATION,
+                        ItemTypes.ITEM_TYPE_OILCONSUMING,
+                        ItemTypes.ITEM_TYPE_REPAIRABLE,
+                        ItemTypes.ITEM_TYPE_DESTROYABLE,
+                        ItemTypes.ITEM_TYPE_LIGHT_BRIGHT,
+                        ItemTypes.ITEM_TYPE_COLORABLE,
+                        ItemTypes.ITEM_TYPE_PLANTABLE
+                })
+                .build();
+        twistedTpl.setDyeAmountGrams(100);
+        twistedLamp = twistedTpl.getTemplateId();
+
+        CreationEntryCreator.createSimpleEntry(SkillList.SMITHING_BLACKSMITHING, ItemList.pumpkinHalloween, ItemList.streetLamp, pumpkinLamp, true, true, 0f, false, false, CreationCategories.LIGHTS_AND_LAMPS);
+        CreationEntryCreator.createSimpleEntry(SkillList.SMITHING_BLACKSMITHING, ItemList.pumpkinHalloween, ItemList.streetLampHanging, pumpkinHanging, true, true, 0f, false, false, CreationCategories.LIGHTS_AND_LAMPS);
+        CreationEntryCreator.createSimpleEntry(SkillList.CARPENTRY, ItemList.pumpkinHalloween, ItemList.log, twistedLamp, true, true, 0f, false, false, CreationCategories.LIGHTS_AND_LAMPS);
+
+        ModelNameProvider litModelProvider = item -> {
+            StringBuilder sb = new StringBuilder(item.getTemplate().getModelName());
+            if (item.isOnFire()) sb.append("lit.");
+            sb.append(MaterialUtilities.getMaterialString(item.getMaterial()));
+            return sb.toString();
+        };
+
+        ModItems.addModelNameProvider(pumpkinLamp, litModelProvider);
+        ModItems.addModelNameProvider(pumpkinHanging, litModelProvider);
+        ModItems.addModelNameProvider(twistedLamp, litModelProvider);
     }
 }
