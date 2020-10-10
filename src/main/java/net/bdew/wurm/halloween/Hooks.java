@@ -11,6 +11,7 @@ import com.wurmonline.server.items.Item;
 import com.wurmonline.server.items.ItemList;
 import com.wurmonline.server.items.NoSpaceException;
 import com.wurmonline.server.players.Player;
+import com.wurmonline.server.skills.SkillList;
 import com.wurmonline.server.zones.NoSuchZoneException;
 import com.wurmonline.server.zones.Zones;
 import com.wurmonline.shared.constants.CounterTypes;
@@ -135,5 +136,15 @@ public class Hooks {
                 }
             });
         }
+    }
+
+    public static int getImproveSkill(Item item) {
+        int templateId = item.getTemplateId();
+        if (templateId == CustomItems.wingsId) {
+            return SkillList.LEATHERWORKING;
+        } else if (templateId == CustomItems.hatId) {
+            return SkillList.CLOTHTAILORING;
+        }
+        return -10;
     }
 }

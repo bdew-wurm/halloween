@@ -108,6 +108,7 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
             CtClass ctMovementScheme = classPool.getCtClass("com.wurmonline.server.creatures.MovementScheme");
             CtClass ctVehicle = classPool.getCtClass("com.wurmonline.server.behaviours.Vehicle");
             CtClass ctPlayer = classPool.getCtClass("com.wurmonline.server.players.Player");
+            CtClass ctMethodsItems = classPool.getCtClass("com.wurmonline.server.behaviours.MethodsItems");
 
             ctCommunicator.getMethod("sendItem", "(Lcom/wurmonline/server/items/Item;JZ)V")
                     .insertAfter("net.bdew.wurm.halloween.Hooks.sendItemHook(this, $1);");
@@ -135,6 +136,9 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
 
             ctItem.getMethod("sendWear", "(Lcom/wurmonline/server/items/Item;B)V")
                     .insertAfter("if (!item.isBodyPartAttached()) net.bdew.wurm.halloween.Hooks.sendWearHook(item, this.getOwnerOrNull());");
+
+            ctMethodsItems.getMethod("getImproveSkill", "(Lcom/wurmonline/server/items/Item;)I")
+                    .insertAfter("if ($_ == -10) $_ = net.bdew.wurm.halloween.Hooks.getImproveSkill($1);");
 
             CustomTitles.register();
 
