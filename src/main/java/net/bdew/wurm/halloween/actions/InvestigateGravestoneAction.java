@@ -133,7 +133,7 @@ public class InvestigateGravestoneAction implements ModAction, ActionPerformer, 
     }
 
     private void doLoot(Creature performer, Communicator comm, Item gravestone) throws NoSuchTemplateException, FailedException, NoSuchCreatureTemplateException {
-        int roll = 39;//Server.rand.nextInt(100);
+        int roll = Server.rand.nextInt(100);
         if (roll < 10) {
             comm.sendAlertServerMessage(String.format("Run away little %s!", performer.getSex() == 0 ? "boy" : "girl"), (byte) 1);
             if (WurmCalendar.isNight())
