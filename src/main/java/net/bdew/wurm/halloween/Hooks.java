@@ -56,15 +56,13 @@ public class Hooks {
         if (prevId != -10L && WurmId.getType(prevId) == CounterTypes.COUNTER_TYPE_ITEMS) {
             Optional<Item> prevItem = Items.getItemOptional(prevId);
             prevItem.filter(x -> x.getTemplateId() == Broom.broomId).ifPresent(item -> {
-                ServerThreadExecutor.INSTANCE.submit(() -> {
-                    Broom.stopCounting(item.getWurmId(), creature);
-                    try {
-                        Zones.getZone(item.getTilePos(), item.isOnSurface()).removeItem(item);
-                        creature.getInventory().insertItem(item, true, false);
-                    } catch (NoSuchZoneException e) {
-                        Halloween.logException(String.format("Zone not found when dismounting broom %d by %s", item.getWurmId(), creature.getName()), e);
-                    }
-                });
+                Broom.stopCounting(item.getWurmId(), creature);
+                try {
+                    Zones.getZone(item.getTilePos(), item.isOnSurface()).removeItem(item);
+                    creature.getInventory().insertItem(item, true, false);
+                } catch (NoSuchZoneException e) {
+                    Halloween.logException(String.format("Zone not found when dismounting broom %d by %s", item.getWurmId(), creature.getName()), e);
+                }
             });
         }
         if (newId != -10L && WurmId.getType(newId) == CounterTypes.COUNTER_TYPE_ITEMS) {
@@ -146,5 +144,14 @@ public class Hooks {
             return SkillList.CLOTHTAILORING;
         }
         return -10;
+    }
+
+    public static void beforePlayerTransfer(Player player) {
+        if (player.getVehicle() != -10L && WurmId.getType(player.getVehicle()) == CounterTypes.COUNTER_TYPE_ITEMS) {
+            Optional<Item> prevItem = Items.getItemOptional(player.getVehicle());
+            prevItem.filter(x -> x.getTemplateId() == Broom.broomId).ifPresent(item -> {
+                player.disembark(false);
+            });
+        }
     }
 }

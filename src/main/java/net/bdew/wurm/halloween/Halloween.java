@@ -140,6 +140,9 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
             ctMethodsItems.getMethod("getImproveSkill", "(Lcom/wurmonline/server/items/Item;)I")
                     .insertAfter("if ($_ == -10) $_ = net.bdew.wurm.halloween.Hooks.getImproveSkill($1);");
 
+            ctPlayer.getMethod("sendTransfer", "(Lcom/wurmonline/server/Server;Ljava/lang/String;ILjava/lang/String;IIIZZB)Z")
+                    .insertBefore("net.bdew.wurm.halloween.Hooks.beforePlayerTransfer(this);");
+
             CustomTitles.register();
 
         } catch (CannotCompileException | NotFoundException e) {

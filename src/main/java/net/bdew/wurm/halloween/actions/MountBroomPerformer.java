@@ -38,6 +38,7 @@ public class MountBroomPerformer implements ActionPerformer {
         return performer.isPlayer()
                 && Vehicles.getVehicle(target) != null
                 && !Vehicles.getVehicle(target).seats[0].isOccupied()
+                && performer.getVehicle() == -10L
                 && (target.getOwnerId() == performer.getWurmId() || !MethodsItems.checkIfStealing(target, performer, null));
     }
 
