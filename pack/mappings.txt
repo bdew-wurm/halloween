@@ -5,6 +5,8 @@ model.corpse.jackospider           = ~graphics.jar/creatures/huge_spider/Jack_O_
 model.corpse.jackospider.butchered = ~graphics.jar/creatures/butcherdgeneric/butcheredGeneric1.wom
 
 model.armour.head.pumpkin        = ~graphics.jar/player/helms/pumpkinHead.wom
+model.armour.head.skull.monster  = helm/dragonSkull_green.wom
+model.armour.head.skull.human    = helm/humanSkull.wom
 armor.xml                        = armor.xml
 
 model.transports.broom           = broom/broom.wom

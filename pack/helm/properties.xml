@@ -1,0 +1,21 @@
+<properties>
+    <dragonSkull_green.wom>
+        <offsetToNull>
+            <NullHelmet>
+                <yPos>-0.22</yPos>
+                <maleScale>0.4</maleScale>
+                <femaleScale>0.4</femaleScale>
+            </NullHelmet>
+        </offsetToNull>
+    </dragonSkull_green.wom>
+    <humanSkull.wom>
+        <offsetToNull>
+            <NullHelmet>
+                <yPos>-0.20</yPos>
+                <zPos>-0.02</zPos>
+                <maleScale>1.4</maleScale>
+                <femaleScale>1.4</femaleScale>
+            </NullHelmet>
+        </offsetToNull>
+    </humanSkull.wom>
+</properties>

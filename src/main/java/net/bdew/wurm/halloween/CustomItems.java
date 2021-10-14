@@ -17,7 +17,7 @@ import java.io.IOException;
 public class CustomItems {
     public static int gravestoneId, hatId, maskId, pumpkinHelmId, candleId, candleInfId;
     public static int cauldronEmptyId, cauldronStewId, cauldronCreepyId, witchWandId, coffinId, wingsId;
-    public static int pumpkinLamp, pumpkinHanging, twistedLamp;
+    public static int pumpkinLamp, pumpkinHanging, twistedLamp, skullHelm1Id, skullHelm2Id;
     public static int skullShoulders = 1063, humanShoulders = 1064;
 
     static void registerGravestone() throws IOException {
@@ -94,7 +94,7 @@ public class CustomItems {
         maskId = temp.getTemplateId();
     }
 
-    static void registerPumpkinHelm() throws IOException {
+    static void registerPumpkinHelms() throws IOException {
         ItemTemplate temp = new ItemTemplateBuilder("bdew.halloween.helm")
                 .name("pumpkin helmet", "pumpkin helmet", "A spooky pumpkin attached to a metal helmet.")
                 .imageNumber((short) IconConstants.ICON_FOOD_PUMPKIN)
@@ -127,6 +127,56 @@ public class CustomItems {
         if (ModConfig.craftablePumpkinHelm)
             CreationEntryCreator.createSimpleEntry(SkillList.SMITHING_ARMOUR_PLATE, ItemList.pumpkinHalloween, ItemList.helmetGreat, pumpkinHelmId, true, true, 0f, false, false, CreationCategories.ARMOUR);
     }
+
+    static void registerSkullHelms() throws IOException {
+        ItemTemplate temp = new ItemTemplateBuilder("bdew.halloween.helm.skull1")
+                .name("monster skull helmet", "monster skull helmet", "A spooky helmet made from a monster skull.")
+                .imageNumber((short) IconConstants.ICON_SMALL_SKULL)
+                .modelName("model.armour.head.skull.monster.")
+                .weightGrams(1000)
+                .dimensions(5, 20, 20)
+                .decayTime(3024000L)
+                .value(10000)
+                .behaviourType((short) 1)
+                .bodySpaces(new byte[]{BodyTemplate.head, BodyTemplate.secondHead})
+                .itemTypes(new short[]{
+                        ItemTypes.ITEM_TYPE_NAMED,
+                        ItemTypes.ITEM_TYPE_ARMOUR,
+                        ItemTypes.ITEM_TYPE_DECORATION,
+                        ItemTypes.ITEM_TYPE_REPAIRABLE,
+                        ItemTypes.ITEM_TYPE_COLORABLE,
+                        ItemTypes.ITEM_TYPE_NOT_MISSION
+                })
+                .build();
+
+        skullHelm1Id = temp.getTemplateId();
+
+        temp = new ItemTemplateBuilder("bdew.halloween.helm.skull2")
+                .name("human skull helmet", "human skull helmet", "A spooky helmet made from a human skull.")
+                .imageNumber((short) IconConstants.ICON_SMALL_SKULL)
+                .modelName("model.armour.head.skull.human.")
+                .weightGrams(1000)
+                .dimensions(5, 20, 20)
+                .decayTime(3024000L)
+                .value(10000)
+                .behaviourType((short) 1)
+                .bodySpaces(new byte[]{BodyTemplate.head, BodyTemplate.secondHead})
+                .itemTypes(new short[]{
+                        ItemTypes.ITEM_TYPE_NAMED,
+                        ItemTypes.ITEM_TYPE_ARMOUR,
+                        ItemTypes.ITEM_TYPE_DECORATION,
+                        ItemTypes.ITEM_TYPE_REPAIRABLE,
+                        ItemTypes.ITEM_TYPE_COLORABLE,
+                        ItemTypes.ITEM_TYPE_NOT_MISSION
+                })
+                .build();
+
+        skullHelm2Id = temp.getTemplateId();
+
+        new ArmourTemplate(skullHelm1Id, ArmourTemplate.ARMOUR_TYPE_PLATE, 0.01F);
+        new ArmourTemplate(skullHelm2Id, ArmourTemplate.ARMOUR_TYPE_PLATE, 0.01F);
+    }
+
 
     static void registerCandles() throws IOException {
         ItemTemplate candle = new ItemTemplateBuilder("bdew.halloween.candle")

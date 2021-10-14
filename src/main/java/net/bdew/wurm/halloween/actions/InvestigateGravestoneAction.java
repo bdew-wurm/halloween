@@ -153,7 +153,7 @@ public class InvestigateGravestoneAction implements ModAction, ActionPerformer, 
                     vz.getWatcher().getCommunicator().sendAddEffect(gravestone.getWurmId() + 2, performer.getWurmId(), (short) 27, performer.getPosX(), performer.getPosY(), performer.getPositionZ(), (byte) 0, "lightningBolt1", 5f, 0f);
             }
             performer.achievement(ModConfig.journalLightningAchId);
-        } else if (roll < 30) {
+        } else if (roll < 28) {
             comm.sendAlertServerMessage("Is a trap!", (byte) 1);
             Methods.sendSound(performer, "sound.magicTurret.attack");
             VolaTile vt = Zones.getOrCreateTile(gravestone.getTilePos(), gravestone.isOnSurface());
@@ -162,7 +162,7 @@ public class InvestigateGravestoneAction implements ModAction, ActionPerformer, 
                     vz.getWatcher().getCommunicator().sendAddEffect(gravestone.getWurmId() + 2, gravestone.getWurmId(), (short) 27, gravestone.getPosX(), gravestone.getPosY(), gravestone.getPosZ(), (byte) 0, "karmaFireball", 10f, 0f);
             }
             addMagicDamage(null, performer, 2, 10000, Wound.TYPE_BURN, false);
-        } else if (roll < 35) {
+        } else if (roll < 32) {
             comm.sendAlertServerMessage("*POOF*", (byte) 1);
             performer.playPersonalSound("sound.emote.chuckle.female");
 
@@ -181,6 +181,10 @@ public class InvestigateGravestoneAction implements ModAction, ActionPerformer, 
             }
 
             performer.achievement(ModConfig.journalTeleportAchId);
+        } else if (roll < 35) {
+            Item hat = ItemFactory.createItem(Server.rand.nextBoolean() ? CustomItems.skullHelm1Id : CustomItems.skullHelm2Id, 90f, ItemMaterials.MATERIAL_UNDEFINED, RandomUtils.randomRarity(10, false), null);
+            performer.getInventory().insertItem(hat);
+            comm.sendNormalServerMessage("You find a spooky skull helmet!");
         } else if (roll < 40) {
             comm.sendAlertServerMessage("OoooOOoooOoooOoooo!", (byte) 1);
             SpellEffects effs = performer.getSpellEffects();

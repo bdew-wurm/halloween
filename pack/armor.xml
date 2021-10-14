@@ -8,5 +8,20 @@
                 </male>
             </default>
         </model.armour.head.pumpkin>
+        <model.armour.head.skull.monster>
+            <default>
+                <male>
+                    <removeHead/>
+                    <removeMask/>
+                </male>
+            </default>
+        </model.armour.head.skull.monster>
+        <model.armour.head.skull.human>
+            <default>
+                <male>
+                    <removeMask/>
+                </male>
+            </default>
+        </model.armour.head.skull.human>
     </helmets>
 </armor>
