@@ -120,12 +120,39 @@ public class Broom {
     private static void tilesMoved(long id, int tiles, Creature driver) {
         if (ModConfig.broomQlLoss > 0) {
             Items.getItemOptional(id).ifPresent(item -> {
-                float ql = item.getQualityLevel() - ModConfig.broomQlLoss * tiles;
-                item.setQualityLevel(ql);
-                if (ql < 10f) {
-                    if (driver.hasLink())
-                        driver.getCommunicator().sendAlertServerMessage("The broom slowly sinks to the ground as it's magic fizzles.", (byte) 1);
-                    driver.disembark(true);
+                float loss = ModConfig.broomQlLoss * tiles;
+
+                if (ModConfig.broomRarityLossModEnable) {
+                    float reductionPercent = 0f;
+
+                    switch (item.getRarity()) {
+                        case 1:
+                            reductionPercent = ModConfig.broomRareLossMod;
+                            break;
+                        case 2:
+                            reductionPercent = ModConfig.broomSupremeLossMod;
+                            break;
+                        case 3:
+                            reductionPercent = ModConfig.broomFantasticLossMod;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    reductionPercent = Math.max(0f, Math.min(1f, reductionPercent));
+
+                    loss *= (1f - reductionPercent);
+                }
+
+                if (loss > 0f) {
+                    float ql = item.getQualityLevel() - loss;
+                    item.setQualityLevel(ql);
+
+                    if (ql < 10f) {
+                        if (driver.hasLink())
+                            driver.getCommunicator().sendAlertServerMessage("The broom slowly sinks to the ground as it's magic fizzles.", (byte) 1);
+                        driver.disembark(true);
+                    }
                 }
             });
         }

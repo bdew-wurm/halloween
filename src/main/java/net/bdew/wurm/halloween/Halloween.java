@@ -90,6 +90,10 @@ public class Halloween implements WurmServerMod, Initable, PreInitable, Configur
         ModConfig.broomSpeedEnchantBonus = Float.parseFloat(properties.getProperty("broomSpeedEnchantBonus", "1"));
         ModConfig.broomMaxSlope = Float.parseFloat(properties.getProperty("broomMaxSlope", "250"));
         ModConfig.broomQlLoss = Float.parseFloat(properties.getProperty("broomQlLoss", "0.0001"));
+        ModConfig.broomRarityLossModEnable = Boolean.parseBoolean(properties.getProperty("broomRarityLossModEnable", "false"));
+        ModConfig.broomRareLossMod = Float.parseFloat(properties.getProperty("broomRareLossMod", "0.25"));
+        ModConfig.broomSupremeLossMod = Float.parseFloat(properties.getProperty("broomSupremeLossMod", "0.5"));
+        ModConfig.broomFantasticLossMod = Float.parseFloat(properties.getProperty("broomFantasticLossMod", "0.75"));
     }
 
     @Override
