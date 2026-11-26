@@ -21,10 +21,6 @@ public class ModConfig {
     public static float broomSpeedEnchantBonus = 1f;
     public static float broomMaxSlope = 250f;
     public static float broomQlLoss = 0.0001f;
-    public static boolean broomRarityLossModEnable = false;
-    public static float broomRareLossMod = 0.25f;
-    public static float broomSupremeLossMod = 0.5f;
-    public static float broomFantasticLossMod = 0.75f;
 
     public static int customJournalId = 40;
 
