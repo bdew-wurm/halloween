@@ -79,6 +79,11 @@ public class InvestigateGravestoneAction implements ModAction, ActionPerformer, 
         try {
             Communicator comm = performer.getCommunicator();
 
+            if (target.getTemplateId() != CustomItems.gravestoneId) {
+                comm.sendNormalServerMessage(String.format("You investigate the %s and determine that you should search for ominous gravestones instead.", target.getName().toLowerCase()));
+                return true;
+            }
+
             Set<Creature> guards = GravestoneTracker.guards.get(target.getWurmId());
             if (guards != null && guards.size() > 0) {
                 boolean attacked = false;
