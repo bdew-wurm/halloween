@@ -45,7 +45,9 @@ tasks.register('dist', Zip) {
             from jar
             from pack
         }
-        from fileTree(dir: 'mods', include: '*')
+        from(fileTree(dir: 'mods', include: '*')) {
+            filter(org.apache.tools.ant.filters.FixCrLfFilter, eol: org.apache.tools.ant.filters.FixCrLfFilter.CrLf.newInstance('crlf'))
+        }
     }
     archiveFileName = "${project.name}-${project.version}.zip"
 }
