@@ -1,0 +1,46 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - '**'
+    tags:
+      - 'v*.*'
+
+jobs:
+  gradle:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 8
+
+      - name: Setup gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          gradle-version: "8.14.8"
+
+      - name: Run gradle build
+        run: ./gradlew dist
+
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          path: build/distributions/*.zip
+
+      - name: Add build to release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: xresloader/upload-to-github-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          file: build/distributions/*.zip
+          overwrite: true
+          tags: true
+          tag_name: ${{ github.ref_name }}
